@@ -7,5 +7,38 @@ class AppColors {
   static const pinkL = Color(0xFFE1BEE7);
   static const purple = Color(0xFF6A1B9A);
   static const blackL = Color.fromRGBO(47, 47, 47, 1);
-  static const blackXl = Color.fromRGBO(28, 28, 28, 1);
+  static const blackXl = Color(0xFF222222);
+  static const blackXxl = Color.fromRGBO(28, 28, 28, 1);
+}
+
+class AppText {
+  static const header = TextStyle(
+    color: AppColors.pinkMain,
+    fontWeight: FontWeight.w500,
+    fontSize: 32,
+  );
+
+  static const btnText = TextStyle(
+    color: AppColors.pinkMain,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+  );
+
+  static const textfieldText = TextStyle(
+    color: AppColors.blackXl,
+    fontWeight: FontWeight.w400,
+    fontSize: 20,
+  );
+
+  static const statusCommonText = TextStyle(
+    color: AppColors.pinkMain,
+    fontWeight: FontWeight.w400,
+    fontSize: 20,
+  );
+
+  static const statusAccentText = TextStyle(
+    color: AppColors.pinkXl,
+    fontWeight: FontWeight.w400,
+    fontSize: 20,
+  );
 }
