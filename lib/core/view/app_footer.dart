@@ -3,9 +3,11 @@ import 'package:push_by_token_tester/core/app_theme.dart';
 
 class AppFooter extends StatefulWidget {
   final int navigationItemsLenght;
+  final void Function(int index) onPageIndicatorClick;
 
   const AppFooter({
     required this.navigationItemsLenght,
+    required this.onPageIndicatorClick,
     super.key,
   });
 
@@ -27,17 +29,15 @@ class _AppFooterState extends State<AppFooter> {
           separatorBuilder: (context, index) => const SizedBox(
             width: 25,
           ),
-          itemBuilder: (context, index) => buildPageIndicator(),
+          itemBuilder: (context, index) => buildPageIndicator(context, index),
         ),
       ),
     );
   }
 
-  Widget buildPageIndicator() {
+  Widget buildPageIndicator(BuildContext context, int index) {
     return GestureDetector(
-      onTap: () {
-        // navigate
-      },
+      onTap: () => widget.onPageIndicatorClick(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 40,
