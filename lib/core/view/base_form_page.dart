@@ -5,6 +5,7 @@ import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 abstract class BaseFormPage extends StatefulWidget {}
 
 abstract class _BaseFormPageState extends State<BaseFormPage> {
+  final formKey = GlobalKey<FormState>();
   late final BaseFormPageModel model;
 
   @override
@@ -18,28 +19,30 @@ abstract class _BaseFormPageState extends State<BaseFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        buildFields(context),
-        ValueListenableBuilder(
-          valueListenable: model.formStatus,
-          builder: (context, _, __) => buildStatusBlock(context),
-        )
-      ],
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          buildFields(context),
+          ValueListenableBuilder(
+            valueListenable: model.formStatus,
+            builder: (context, _, __) => buildStatusBlock(context),
+          )
+        ],
+      ),
     );
   }
 
   @protected
   Widget buildFields(BuildContext context);
 
-  Widget buildStatusBlock(BuildContext context) {
-    return switch (model.formStatus.value) {
-      FormStatus.notSended => buildNotSendedStatusBlock(),
-      FormStatus.loading => buildLoadingStatusBlock(),
-      FormStatus.successful => buildSuccessfulStatusBlock(),
-      FormStatus.rejected => buildRejectedStatusBlock()
-    };
-  }
+  Widget buildStatusBlock(BuildContext context) =>
+      switch (model.formStatus.value) {
+        FormStatus.notSended => buildNotSendedStatusBlock(),
+        FormStatus.loading => buildLoadingStatusBlock(),
+        FormStatus.successful => buildSuccessfulStatusBlock(),
+        FormStatus.rejected => buildRejectedStatusBlock()
+      };
 
   @protected
   Widget buildNotSendedStatusBlock();
@@ -52,4 +55,16 @@ abstract class _BaseFormPageState extends State<BaseFormPage> {
 
   @protected
   Widget buildSuccessfulStatusBlock();
+
+  void trySubmit() async {
+    if (!context.mounted) {
+      return;
+    }
+    if (model.formStatus.value == FormStatus.loading) {
+      return;
+    }
+    if (formKey.currentState?.validate() ?? false) {
+      model.submitForm();
+    }
+  }
 }
