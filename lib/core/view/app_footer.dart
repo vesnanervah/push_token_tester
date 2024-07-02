@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:push_by_token_tester/core/app_theme.dart';
+import 'package:push_by_token_tester/core/model/app_theme.dart';
 
 class AppFooter extends StatefulWidget {
   final int navigationItemsLenght;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:push_by_token_tester/core/app_theme.dart';
-import 'package:push_by_token_tester/core/model/nav_item.dart';
+import 'package:push_by_token_tester/core/model/app_theme.dart';
+import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/core/view/app_footer.dart';
 import 'package:push_by_token_tester/core/view/app_header.dart';
 
