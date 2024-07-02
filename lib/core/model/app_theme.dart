@@ -57,6 +57,11 @@ class AppTheme {
         backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),
       ),
     ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      linearMinHeight: 14,
+      color: AppColors.pinkL,
+      linearTrackColor: AppColors.pinkXl,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.pinkMain,
