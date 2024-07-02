@@ -1,50 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
+import 'package:push_by_token_tester/core/view/base_form_page.dart';
 import 'package:push_by_token_tester/google_auth_form/model/google_auth_form_model.dart';
 
-class GoogleAuthForm extends StatefulWidget {
+class GoogleAuthForm extends BaseFormPage {
   const GoogleAuthForm({super.key});
 
   @override
   State<StatefulWidget> createState() => _GoogleAuthFormState();
 }
 
-class _GoogleAuthFormState extends State<GoogleAuthForm> {
-  final formKey = GlobalKey<FormState>();
-  final textController = TextEditingController();
-  final model = GoogleAuthFormModel();
+class _GoogleAuthFormState extends BaseFormPageState {
+  @override
+  Widget buildFields(BuildContext context) {
+    // TODO: implement buildFields
+    throw UnimplementedError();
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          const Text('Вставьте содержимое json от firebase messaging.'),
-          const SizedBox(height: 20),
-          TextFormField(
-            controller: textController,
-            validator: (value) =>
-                value!.isEmpty ? 'Не должно быть пустым' : null,
-          ),
-          const SizedBox(height: 20),
-          TextButton(
-            onPressed: () async {
-              if (model.isLoading || !context.mounted) return;
-              if (formKey.currentState!.validate()) {
-                final error = await model.auth(textController.text);
-                if (error != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(error),
-                    ),
-                  );
-                  return;
-                }
-              }
-            },
-            child: const Text('Получить токен от FirebaseMessaging'),
-          ),
-        ],
-      ),
-    );
+  Widget buildLoadingStatusBlock() {
+    // TODO: implement buildLoadingStatusBlock
+    throw UnimplementedError();
   }
+
+  @override
+  Widget buildNotSendedStatusBlock() {
+    // TODO: implement buildNotSendedStatusBlock
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildRejectedStatusBlock() {
+    // TODO: implement buildRejectedStatusBlock
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuccessfulStatusBlock() {
+    // TODO: implement buildSuccessfulStatusBlock
+    throw UnimplementedError();
+  }
+
+  @override
+  BaseFormPageModel createModel() => GoogleAuthFormModel(appModel: appModel);
 }

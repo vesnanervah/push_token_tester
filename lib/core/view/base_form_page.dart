@@ -1,12 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 
-abstract class BaseFormPage extends StatefulWidget {}
+abstract class BaseFormPage extends StatefulWidget {
+  const BaseFormPage({super.key});
+}
 
-abstract class _BaseFormPageState extends State<BaseFormPage> {
+abstract class BaseFormPageState<M extends BaseFormPageModel>
+    extends State<BaseFormPage> {
   final formKey = GlobalKey<FormState>();
-  late final BaseFormPageModel model;
+  late final M model;
+
+  AppModel get appModel => context.read<AppModel>();
 
   @override
   void initState() {
@@ -15,7 +23,7 @@ abstract class _BaseFormPageState extends State<BaseFormPage> {
   }
 
   @protected
-  BaseFormPageModel createModel();
+  M createModel();
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/core/view/app_footer.dart';
@@ -12,6 +14,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final appModel = AppModel();
   final pageViewController = PageController();
   final pages = NavItem.values.map((navItem) => navItem.body).toList();
   final selectedNavItemNotifier = ValueNotifier(NavItem.jsonPage);
@@ -20,29 +23,34 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.themeData,
-      home: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AppHeader(
-            selectedNavItemNotifier: selectedNavItemNotifier,
-          ),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(color: AppColors.blackXxl),
-              padding: const EdgeInsets.all(30),
-              child: PageView.builder(
-                controller: pageViewController,
-                itemCount: pages.length,
-                itemBuilder: (context, index) => pages[index],
+      home: Scaffold(
+        body: Provider(
+          create: (context) => appModel,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppHeader(
+                selectedNavItemNotifier: selectedNavItemNotifier,
               ),
-            ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(color: AppColors.blackXxl),
+                  padding: const EdgeInsets.all(30),
+                  child: PageView.builder(
+                    controller: pageViewController,
+                    itemCount: pages.length,
+                    itemBuilder: (context, index) => pages[index],
+                  ),
+                ),
+              ),
+              // TODO: read subpages lenght
+              AppFooter(
+                navigationItemsLenght: pages.length,
+                onPageIndicatorClick: (index) => handleNavigation(index),
+              )
+            ],
           ),
-          // TODO: read subpages lenght
-          AppFooter(
-            navigationItemsLenght: pages.length,
-            onPageIndicatorClick: (index) => handleNavigation(index),
-          )
-        ],
+        ),
       ),
     );
   }
