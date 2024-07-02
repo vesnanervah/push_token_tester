@@ -6,6 +6,7 @@ class AppColors {
   static const pinkXl = Color(0xFFBA68C8);
   static const pinkL = Color(0xFFE1BEE7);
   static const purple = Color(0xFF6A1B9A);
+  static const purpleXl = Color(0xFFAA00FF);
   static const blackL = Color.fromRGBO(47, 47, 47, 1);
   static const blackXl = Color(0xFF222222);
   static const blackXxl = Color.fromRGBO(28, 28, 28, 1);
@@ -54,6 +55,35 @@ class AppTheme {
       style: ButtonStyle(
         elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: AppColors.pinkMain,
+      activeIndicatorBorder: BorderSide.none,
+      outlineBorder: BorderSide.none,
+      errorStyle: const TextStyle(
+        color: AppColors.purpleXl,
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: AppColors.purpleXl, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: AppColors.purpleXl, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.transparent, width: 0),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.transparent, width: 0),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      border: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.transparent, width: 0),
+        borderRadius: BorderRadius.circular(12),
       ),
     ),
   );

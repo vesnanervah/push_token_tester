@@ -31,13 +31,36 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
       key: formKey,
       child: Column(
         children: [
-          buildFields(context),
+          const Spacer(flex: 4),
+          wrapFieldsWithConstraints(context),
+          const Spacer(flex: 2),
           ValueListenableBuilder(
             valueListenable: model.formStatus,
             builder: (context, _, __) => buildStatusBlock(context),
           )
         ],
       ),
+    );
+  }
+
+  Widget wrapFieldsWithConstraints(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    if (width < 576) return buildFields(context);
+    if (width < 768) {
+      return SizedBox(
+        width: width / 100 * 80,
+        child: buildFields(context),
+      );
+    }
+    if (width < 1100) {
+      return SizedBox(
+        width: width / 100 * 70,
+        child: buildFields(context),
+      );
+    }
+    return SizedBox(
+      width: 768,
+      child: buildFields(context),
     );
   }
 
