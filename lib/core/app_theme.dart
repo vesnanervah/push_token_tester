@@ -16,29 +16,45 @@ class AppText {
     color: AppColors.pinkMain,
     fontWeight: FontWeight.w500,
     fontSize: 32,
+    decoration: TextDecoration.none,
   );
 
   static const btnText = TextStyle(
     color: AppColors.pinkMain,
     fontWeight: FontWeight.w500,
     fontSize: 16,
+    decoration: TextDecoration.none,
   );
 
   static const textfieldText = TextStyle(
     color: AppColors.blackXl,
     fontWeight: FontWeight.w400,
     fontSize: 20,
+    decoration: TextDecoration.none,
   );
 
   static const statusCommonText = TextStyle(
     color: AppColors.pinkMain,
     fontWeight: FontWeight.w400,
     fontSize: 20,
+    decoration: TextDecoration.none,
   );
 
   static const statusAccentText = TextStyle(
     color: AppColors.pinkXl,
     fontWeight: FontWeight.w400,
     fontSize: 20,
+    decoration: TextDecoration.none,
+  );
+}
+
+class AppTheme {
+  static final themeData = ThemeData(
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+        elevation: WidgetStatePropertyAll(0),
+        backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),
+      ),
+    ),
   );
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/app_theme.dart';
+import 'package:push_by_token_tester/core/view/app_footer.dart';
+import 'package:push_by_token_tester/core/view/app_header.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -11,20 +14,24 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.themeData,
       home: Column(
-        children: [],
-      ),
-    );
-  }
-
-  Widget buildHeader(BuildContext context) {
-    return Container(
-      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // TODO: button 'где искать'
-          Align(
-            alignment: Alignment.center,
-          )
+          const AppHeader(headerText: 'Тайтл страницы'),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(color: AppColors.blackXxl),
+              padding: EdgeInsets.all(30),
+              child: Column(
+                children: [
+                  // TODO: main content
+                ],
+              ),
+            ),
+          ),
+          // TODO: read subpages lenght
+          const AppFooter(navigationItemsLenght: 3),
         ],
       ),
     );
