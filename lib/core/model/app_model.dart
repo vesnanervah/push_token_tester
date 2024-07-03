@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
+import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
+import 'package:push_by_token_tester/google_auth_form/view/gooogle_auth_form_page.dart';
+import 'package:push_by_token_tester/push_sender_form/view/push_sender_form_page.dart';
 
 class AppModel {
   String? googleAuthJsonString;
@@ -15,14 +18,17 @@ class AppModel {
       AppRoute(
         navItem: NavItem.jsonPage,
         isAvailable: () => true,
+        body: const GoogleAuthFormPage(),
       ),
       AppRoute(
-        navItem: NavItem.jsonPage,
+        navItem: NavItem.deviceTokenPage,
         isAvailable: () => googleAuthJsonString != null,
+        body: const DeviceTokenFormPage(),
       ),
       AppRoute(
         navItem: NavItem.pushContentPage,
         isAvailable: () => googleAuthJsonString != null && deviceToken != null,
+        body: const PushSenderFormPage(),
       )
     ];
     isInitializedNotifier.value = true;
@@ -32,9 +38,8 @@ class AppModel {
 class AppRoute {
   final NavItem navItem;
   final bool Function() isAvailable;
+  final Widget body;
 
-  AppRoute({
-    required this.navItem,
-    required this.isAvailable,
-  });
+  AppRoute(
+      {required this.navItem, required this.isAvailable, required this.body});
 }

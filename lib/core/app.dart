@@ -42,7 +42,7 @@ class _AppState extends State<App> {
                               controller: appModel.pageViewController,
                               itemCount: appModel.appRoutes!.length,
                               itemBuilder: (context, index) =>
-                                  appModel.appRoutes![index].navItem.body,
+                                  appModel.appRoutes![index].body,
                             ),
                           ),
                         ),
