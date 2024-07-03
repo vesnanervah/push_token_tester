@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:push_by_token_tester/core/model/app_model.dart';
+import 'package:push_by_token_tester/core/model/app_theme.dart';
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 
@@ -67,6 +68,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
   @protected
   Widget buildFields(BuildContext context);
 
+  @protected
   Widget buildStatusBlock(BuildContext context) =>
       switch (model.formStatus.value) {
         FormStatus.notSended => buildNotSendedStatusBlock(),
@@ -76,16 +78,101 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
       };
 
   @protected
-  Widget buildNotSendedStatusBlock();
+  Widget buildNotSendedStatusBlock() => ElevatedButton(
+        onPressed: () => trySubmit(),
+        child: Text(
+          getSubmitBtnText(),
+          style: AppText.btnText,
+        ),
+      );
 
   @protected
-  Widget buildLoadingStatusBlock();
+  Widget buildLoadingStatusBlock() => Column(
+        children: [
+          buildLoadingStatusBlockText(),
+          const SizedBox(height: 20),
+          const LinearProgressIndicator(),
+        ],
+      );
 
   @protected
-  Widget buildRejectedStatusBlock();
+  Widget buildRejectedStatusBlock() => Column(
+        children: [
+          Text.rich(
+            TextSpan(
+              style: AppText.statusCommonText,
+              children: [
+                const TextSpan(text: 'Ошибка: '),
+                TextSpan(
+                  text: model.errorMsg ?? 'Что-то пошло не так',
+                  style: AppText.statusAccentText,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => model.resetForm(),
+                child: const Text(
+                  'Сбросить',
+                  style: AppText.btnText,
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: navigate to next page
+                },
+                child: const Text(
+                  'Повторить',
+                  style: AppText.btnText,
+                ),
+              )
+            ],
+          ),
+        ],
+      );
 
   @protected
-  Widget buildSuccessfulStatusBlock();
+  Widget buildSuccessfulStatusBlock() => Column(
+        children: [
+          buildSuccessfulStatusBlockText(),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => model.resetForm(),
+                child: const Text(
+                  'Сбросить',
+                  style: AppText.btnText,
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // TODO: navigate to next page
+                },
+                child: const Text(
+                  'Продолжить',
+                  style: AppText.btnText,
+                ),
+              )
+            ],
+          ),
+        ],
+      );
+
+  @protected
+  Widget buildLoadingStatusBlockText();
+
+  @protected
+  Widget buildSuccessfulStatusBlockText();
+
+  String getSubmitBtnText();
 
   void trySubmit() async {
     if (!context.mounted) {
