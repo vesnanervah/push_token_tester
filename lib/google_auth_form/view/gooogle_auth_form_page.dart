@@ -51,5 +51,5 @@ class _GoogleAuthFormPageState extends BaseFormPageState<GoogleAuthFormModel> {
       );
 
   @override
-  String getSubmitBtnText() => 'Далее';
+  String getSubmitBtnText() => 'Отправить';
 }
