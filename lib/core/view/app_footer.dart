@@ -43,7 +43,9 @@ class _AppFooterState extends State<AppFooter> {
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-          color: AppColors.purple,
+          color: getRouteAccessability(index)
+              ? AppColors.pinkXxl
+              : AppColors.purple,
           shape: BoxShape.circle,
         ),
       ),
@@ -51,6 +53,9 @@ class _AppFooterState extends State<AppFooter> {
   }
 
   void handleNavigation(int index) {
+    if (!getRouteAccessability(index)) {
+      return;
+    }
     widget.appModel.selectedNavItemNotifier.value = NavItem.values[index];
     widget.appModel.pageViewController.animateToPage(
       index,
@@ -59,4 +64,7 @@ class _AppFooterState extends State<AppFooter> {
     );
     setState(() {});
   }
+
+  bool getRouteAccessability(int index) =>
+      widget.appModel.appRoutes![index].isAvailable.call();
 }
