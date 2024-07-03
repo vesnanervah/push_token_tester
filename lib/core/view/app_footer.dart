@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
+import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 
 class AppFooter extends StatefulWidget {
-  final int navigationItemsLenght;
-  final void Function(int index) onPageIndicatorClick;
+  final AppModel appModel;
 
   const AppFooter({
-    required this.navigationItemsLenght,
-    required this.onPageIndicatorClick,
+    required this.appModel,
     super.key,
   });
 
@@ -23,7 +23,7 @@ class _AppFooterState extends State<AppFooter> {
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListView.separated(
-          itemCount: widget.navigationItemsLenght,
+          itemCount: widget.appModel.appRoutes!.length,
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(
@@ -37,7 +37,7 @@ class _AppFooterState extends State<AppFooter> {
 
   Widget buildPageIndicator(BuildContext context, int index) {
     return GestureDetector(
-      onTap: () => widget.onPageIndicatorClick(index),
+      onTap: () => handleNavigation(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 40,
@@ -48,5 +48,15 @@ class _AppFooterState extends State<AppFooter> {
         ),
       ),
     );
+  }
+
+  void handleNavigation(int index) {
+    widget.appModel.selectedNavItemNotifier.value = NavItem.values[index];
+    widget.appModel.pageViewController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.bounceIn,
+    );
+    setState(() {});
   }
 }
