@@ -14,6 +14,7 @@ class PushSenderFormModel extends BaseFormPageModel {
     titleController.text = '';
     textPushController.text = '';
     bodyController.text = '';
+    super.resetForm();
   }
 
   @override
