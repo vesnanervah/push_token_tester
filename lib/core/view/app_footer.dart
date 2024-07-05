@@ -22,15 +22,20 @@ class _AppFooterState extends State<AppFooter> {
       height: 100,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
-        child: ListView.separated(
-          itemCount: widget.appModel.appRoutes!.length,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          separatorBuilder: (context, index) => const SizedBox(
-            width: 25,
-          ),
-          itemBuilder: (context, index) => buildPageIndicator(context, index),
-        ),
+        child: ListenableBuilder(
+            listenable: widget.appModel.selectedNavItemNotifier,
+            builder: (context, _) {
+              return ListView.separated(
+                itemCount: widget.appModel.appRoutes!.length,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => const SizedBox(
+                  width: 25,
+                ),
+                itemBuilder: (context, index) =>
+                    buildPageIndicator(context, index),
+              );
+            }),
       ),
     );
   }
