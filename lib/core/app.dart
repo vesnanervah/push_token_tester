@@ -40,9 +40,9 @@ class _AppState extends State<App> {
                             padding: const EdgeInsets.all(30),
                             child: PageView.builder(
                               controller: appModel.pageViewController,
-                              itemCount: appModel.appRoutes!.length,
+                              itemCount: appModel.appRoutes.length,
                               itemBuilder: (context, index) =>
-                                  appModel.appRoutes![index].body,
+                                  appModel.appRoutes[index].body,
                             ),
                           ),
                         ),

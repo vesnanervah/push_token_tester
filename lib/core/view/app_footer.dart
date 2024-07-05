@@ -26,7 +26,7 @@ class _AppFooterState extends State<AppFooter> {
             listenable: widget.appModel.selectedNavItemNotifier,
             builder: (context, _) {
               return ListView.separated(
-                itemCount: widget.appModel.appRoutes!.length,
+                itemCount: widget.appModel.appRoutes.length,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => const SizedBox(
@@ -71,5 +71,5 @@ class _AppFooterState extends State<AppFooter> {
   }
 
   bool getRouteAccessability(int index) =>
-      widget.appModel.appRoutes![index].isAvailable.call();
+      widget.appModel.appRoutes[index].isAvailable.call();
 }
