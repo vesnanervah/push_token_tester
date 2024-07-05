@@ -35,7 +35,8 @@ class GoogleAuthFormModel extends BaseFormPageModel {
         ),
         [_firebaseMessagingScope],
       );
-      appModel.googleAuthToken = client!.credentials.accessToken.toString();
+      appModel.googleAuthToken = client!.credentials.accessToken.data;
+      appModel.googleAuthJsonString = jsonTextController.text;
       formStatus.value = FormStatus.successful;
     } catch (e) {
       // TODO: обработка ошибок
