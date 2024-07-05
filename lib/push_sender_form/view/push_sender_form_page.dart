@@ -61,5 +61,34 @@ class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
       );
 
   @override
+  Widget buildSuccessfulStatusBlock() => Column(
+        children: [
+          buildSuccessfulStatusBlockText(),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => model.resetForm(),
+                child: const Text(
+                  'Сбросить',
+                  style: AppText.btnText,
+                ),
+              ),
+              const SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  trySubmit();
+                },
+                child: const Text(
+                  'Повторить',
+                  style: AppText.btnText,
+                ),
+              )
+            ],
+          ),
+        ],
+      );
+  @override
   String getSubmitBtnText() => 'Отправить';
 }
