@@ -14,12 +14,21 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
   final formKey = GlobalKey<FormState>();
   late final M model;
 
-  AppModel get appModel => context.read<AppModel>();
+  late final AppModel appModel = context.read<AppModel>();
+
+  late final AppRoute currentRoute =
+      appModel.appRoutes[appModel.selectedNavItemNotifier.value.index];
 
   @override
   void initState() {
     super.initState();
     model = createModel();
+  }
+
+  @override
+  void dispose() {
+    currentRoute.status = model.formStatusNotifier.value;
+    super.dispose();
   }
 
   @protected
@@ -35,7 +44,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
           wrapFieldsWithConstraints(context),
           const Spacer(flex: 2),
           ValueListenableBuilder(
-            valueListenable: model.formStatus,
+            valueListenable: model.formStatusNotifier,
             builder: (context, _, __) => buildStatusBlock(context),
           )
         ],
@@ -69,7 +78,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
 
   @protected
   Widget buildStatusBlock(BuildContext context) =>
-      switch (model.formStatus.value) {
+      switch (model.formStatusNotifier.value) {
         FormStatus.notSended => buildNotSendedStatusBlock(),
         FormStatus.loading => buildLoadingStatusBlock(),
         FormStatus.successful => buildSuccessfulStatusBlock(),
@@ -177,7 +186,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
     if (!context.mounted) {
       return;
     }
-    if (model.formStatus.value == FormStatus.loading) {
+    if (model.formStatusNotifier.value == FormStatus.loading) {
       return;
     }
     if (formKey.currentState?.validate() ?? false) {

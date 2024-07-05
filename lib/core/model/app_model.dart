@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
@@ -13,7 +14,7 @@ class AppModel {
   final selectedNavItemNotifier = ValueNotifier(NavItem.jsonPage);
   final pageViewController = PageController();
   final isInitializedNotifier = ValueNotifier(false);
-  List<AppRoute>? appRoutes;
+  late List<AppRoute> appRoutes;
   late final api = PushApi(appModel: this);
 
   AppModel() {
@@ -57,10 +58,12 @@ class AppRoute {
   final NavItem navItem;
   final bool Function() isAvailable;
   final Widget body;
+  FormStatus status;
 
   AppRoute({
     required this.navItem,
     required this.isAvailable,
     required this.body,
+    this.status = FormStatus.notSended,
   });
 }
