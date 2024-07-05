@@ -36,8 +36,10 @@ class AppModel {
 
   void continueToNextStep() {
     if (selectedNavItemNotifier.value.index == appRoutes!.length - 1) return;
+    selectedNavItemNotifier.value =
+        NavItem.values[selectedNavItemNotifier.value.index + 1];
     pageViewController.animateToPage(
-      selectedNavItemNotifier.value.index + 1,
+      selectedNavItemNotifier.value.index,
       duration: const Duration(milliseconds: 200),
       curve: Curves.bounceIn,
     );
