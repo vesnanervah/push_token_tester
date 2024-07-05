@@ -21,7 +21,6 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     client = null;
     appModel.googleAuthJsonString = null;
     appModel.googleAuthToken = null;
-    formStatusNotifier.value = FormStatus.notSended;
   }
 
   @override
