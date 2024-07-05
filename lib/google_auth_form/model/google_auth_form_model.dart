@@ -29,13 +29,14 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     formStatus.value = FormStatus.loading;
     print(jsonTextController.text);
     try {
+      final jsonData = jsonDecode(jsonTextController.text);
       client = await clientViaServiceAccount(
-        ServiceAccountCredentials.fromJson(
-          jsonDecode(jsonTextController.text),
-        ),
+        ServiceAccountCredentials.fromJson(jsonData),
         [_firebaseMessagingScope],
       );
+      appModel.projectId = jsonData['project_id'];
       appModel.googleAuthToken = client!.credentials.accessToken.data;
+      // appModel.projectId = client!.credentials..data;
       appModel.googleAuthJsonString = jsonTextController.text;
       formStatus.value = FormStatus.successful;
     } catch (e) {
