@@ -12,7 +12,7 @@ class AppModel {
   final selectedNavItemNotifier = ValueNotifier(NavItem.jsonPage);
   final pageViewController = PageController();
   final isInitializedNotifier = ValueNotifier(false);
-  List<AppRoute>? appRoutes;
+  late List<AppRoute> appRoutes;
 
   AppModel() {
     appRoutes = <AppRoute>[

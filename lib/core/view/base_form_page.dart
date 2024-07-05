@@ -14,10 +14,10 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
   final formKey = GlobalKey<FormState>();
   late final M model;
 
-  AppModel get appModel => context.read<AppModel>();
+  late final AppModel appModel = context.read<AppModel>();
 
-  AppRoute? get currentRoute =>
-      appModel.appRoutes?[appModel.selectedNavItemNotifier.value.index];
+  late final AppRoute currentRoute =
+      appModel.appRoutes[appModel.selectedNavItemNotifier.value.index];
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
 
   @override
   void dispose() {
-    currentRoute?.status = model.formStatusNotifier.value;
+    currentRoute.status = model.formStatusNotifier.value;
     super.dispose();
   }
 
