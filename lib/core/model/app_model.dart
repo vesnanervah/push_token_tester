@@ -22,12 +22,16 @@ class AppModel {
       ),
       AppRoute(
         navItem: NavItem.deviceTokenPage,
-        isAvailable: () => googleAuthJsonString != null,
+        isAvailable: () =>
+            googleAuthJsonString != null && googleAuthToken != null,
         body: const DeviceTokenFormPage(),
       ),
       AppRoute(
         navItem: NavItem.pushContentPage,
-        isAvailable: () => googleAuthJsonString != null && deviceToken != null,
+        isAvailable: () =>
+            googleAuthJsonString != null &&
+            googleAuthToken != null &&
+            deviceToken != null,
         body: const PushSenderFormPage(),
       )
     ];

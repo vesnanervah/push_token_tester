@@ -19,8 +19,8 @@ class GoogleAuthFormModel extends BaseFormPageModel {
   @override
   void resetForm() {
     client = null;
-    appModel.googleAuthJsonString = '';
-    appModel.googleAuthToken = '';
+    appModel.googleAuthJsonString = null;
+    appModel.googleAuthToken = null;
     formStatus.value = FormStatus.notSended;
   }
 
