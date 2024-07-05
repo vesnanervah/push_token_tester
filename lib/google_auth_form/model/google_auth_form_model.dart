@@ -36,7 +36,6 @@ class GoogleAuthFormModel extends BaseFormPageModel {
       );
       appModel.projectId = jsonData['project_id'];
       appModel.googleAuthToken = client!.credentials.accessToken.data;
-      // appModel.projectId = client!.credentials..data;
       appModel.googleAuthJsonString = jsonTextController.text;
       formStatus.value = FormStatus.successful;
     } catch (e) {
