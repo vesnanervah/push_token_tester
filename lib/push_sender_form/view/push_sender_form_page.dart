@@ -18,16 +18,19 @@ class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
   Widget buildFields(BuildContext context) => Column(
         children: [
           TextFormField(
+            controller: model.titleController,
             maxLines: 1,
             decoration: const InputDecoration(hintText: 'Заголовок...'),
           ),
           const SizedBox(height: 20),
           TextFormField(
+            controller: model.textPushController,
             maxLines: 1,
             decoration: const InputDecoration(hintText: 'Текст уведомления...'),
           ),
           const SizedBox(height: 20),
           TextFormField(
+            controller: model.bodyController,
             maxLines: 4,
             decoration: const InputDecoration(hintText: 'Тело уведомления...'),
           )
