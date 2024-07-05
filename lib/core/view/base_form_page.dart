@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
@@ -124,7 +123,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: navigate to next page
+                  model.submitForm();
                 },
                 child: const Text(
                   'Повторить',
@@ -154,7 +153,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  // TODO: navigate to next page
+                  appModel.continueToNextStep();
                 },
                 child: const Text(
                   'Продолжить',

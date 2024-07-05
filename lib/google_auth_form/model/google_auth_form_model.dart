@@ -27,10 +27,11 @@ class GoogleAuthFormModel extends BaseFormPageModel {
   @override
   Future<void> submitForm() async {
     formStatus.value = FormStatus.loading;
+    print(jsonTextController.text);
     try {
       client = await clientViaServiceAccount(
         ServiceAccountCredentials.fromJson(
-          jsonEncode(jsonTextController.text),
+          jsonDecode(jsonTextController.text),
         ),
         [_firebaseMessagingScope],
       );

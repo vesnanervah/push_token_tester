@@ -41,7 +41,6 @@ class _DeviceTokenFormPageState
           ElevatedButton(
             onPressed: () {
               trySubmit();
-              // TODO: navigate to next page
             },
             child: const Text(
               'Продолжить',
@@ -51,7 +50,7 @@ class _DeviceTokenFormPageState
         ],
       );
 
-  // TODO: make builder bellow nullable in super class
+  // TODO: make builders bellow nullable in super class
   @override
   Widget buildSuccessfulStatusBlockText() {
     // TODO: implement buildSuccessfulStatusBlockText

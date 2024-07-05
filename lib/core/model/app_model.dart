@@ -33,6 +33,15 @@ class AppModel {
     ];
     isInitializedNotifier.value = true;
   }
+
+  void continueToNextStep() {
+    if (selectedNavItemNotifier.value.index == appRoutes!.length - 1) return;
+    pageViewController.animateToPage(
+      selectedNavItemNotifier.value.index + 1,
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.bounceIn,
+    );
+  }
 }
 
 class AppRoute {
@@ -40,6 +49,9 @@ class AppRoute {
   final bool Function() isAvailable;
   final Widget body;
 
-  AppRoute(
-      {required this.navItem, required this.isAvailable, required this.body});
+  AppRoute({
+    required this.navItem,
+    required this.isAvailable,
+    required this.body,
+  });
 }
