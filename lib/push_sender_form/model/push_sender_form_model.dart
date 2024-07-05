@@ -11,7 +11,10 @@ class PushSenderFormModel extends BaseFormPageModel {
 
   @override
   void resetForm() {
-    // TODO: implement resetForm
+    titleController.text = '';
+    textPushController.text = '';
+    bodyController.text = '';
+    formStatus.value = FormStatus.notSended;
   }
 
   @override
