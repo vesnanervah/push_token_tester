@@ -14,7 +14,7 @@ class _DeviceTokenFormPageState
     extends BaseFormPageState<DeviceTokenFormModel> {
   @override
   DeviceTokenFormModel createModel() =>
-      DeviceTokenFormModel(appModel: appModel, status: currentRoute!.status);
+      DeviceTokenFormModel(appModel: appModel, status: currentRoute.status);
 
   @override
   Widget buildFields(BuildContext context) => TextFormField(
