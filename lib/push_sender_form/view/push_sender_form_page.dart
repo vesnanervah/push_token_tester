@@ -12,7 +12,8 @@ class PushSenderFormPage extends BaseFormPage {
 
 class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
   @override
-  PushSenderFormModel createModel() => PushSenderFormModel(appModel: appModel);
+  PushSenderFormModel createModel() =>
+      PushSenderFormModel(appModel: appModel, status: currentRoute!.status);
 
   @override
   Widget buildFields(BuildContext context) => Column(

@@ -12,7 +12,8 @@ class GoogleAuthFormPage extends BaseFormPage {
 
 class _GoogleAuthFormPageState extends BaseFormPageState<GoogleAuthFormModel> {
   @override
-  GoogleAuthFormModel createModel() => GoogleAuthFormModel(appModel: appModel);
+  GoogleAuthFormModel createModel() =>
+      GoogleAuthFormModel(appModel: appModel, status: currentRoute!.status);
 
   @override
   Widget buildFields(BuildContext context) => TextFormField(

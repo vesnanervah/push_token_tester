@@ -10,7 +10,7 @@ class GoogleAuthFormModel extends BaseFormPageModel {
       'https://www.googleapis.com/auth/firebase.messaging';
   AutoRefreshingAuthClient? client;
 
-  GoogleAuthFormModel({required super.appModel}) {
+  GoogleAuthFormModel({required super.appModel, required super.status}) {
     if (appModel.googleAuthJsonString?.isNotEmpty ?? false) {
       jsonTextController.text = appModel.googleAuthJsonString!;
     }
@@ -21,12 +21,12 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     client = null;
     appModel.googleAuthJsonString = null;
     appModel.googleAuthToken = null;
-    formStatus.value = FormStatus.notSended;
+    formStatusNotifier.value = FormStatus.notSended;
   }
 
   @override
   Future<void> submitForm() async {
-    formStatus.value = FormStatus.loading;
+    formStatusNotifier.value = FormStatus.loading;
     print(jsonTextController.text);
     try {
       client = await clientViaServiceAccount(
@@ -37,12 +37,12 @@ class GoogleAuthFormModel extends BaseFormPageModel {
       );
       appModel.googleAuthToken = client!.credentials.accessToken.data;
       appModel.googleAuthJsonString = jsonTextController.text;
-      formStatus.value = FormStatus.successful;
+      formStatusNotifier.value = FormStatus.successful;
     } catch (e) {
       // TODO: обработка ошибок
       print(e);
       errorMsg = 'Что-то пошло не так';
-      formStatus.value = FormStatus.rejected;
+      formStatusNotifier.value = FormStatus.rejected;
     }
   }
 }

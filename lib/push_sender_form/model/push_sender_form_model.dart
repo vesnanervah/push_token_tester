@@ -1,7 +1,7 @@
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
 
 class PushSenderFormModel extends BaseFormPageModel {
-  PushSenderFormModel({required super.appModel});
+  PushSenderFormModel({required super.appModel, required super.status});
 
   @override
   void resetForm() {
