@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
+import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
 import 'package:push_by_token_tester/google_auth_form/view/gooogle_auth_form_page.dart';
@@ -8,11 +9,13 @@ import 'package:push_by_token_tester/push_sender_form/view/push_sender_form_page
 class AppModel {
   String? googleAuthJsonString;
   String? googleAuthToken;
+  String? projectId;
   String? deviceToken;
   final selectedNavItemNotifier = ValueNotifier(NavItem.jsonPage);
   final pageViewController = PageController();
   final isInitializedNotifier = ValueNotifier(false);
   late List<AppRoute> appRoutes;
+  late final api = PushApi(appModel: this);
 
   AppModel() {
     appRoutes = <AppRoute>[

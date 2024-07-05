@@ -18,6 +18,7 @@ class _DeviceTokenFormPageState
 
   @override
   Widget buildFields(BuildContext context) => TextFormField(
+        controller: model.deviceTokenFieldController,
         decoration: const InputDecoration(hintText: 'Девайс токен...'),
         minLines: 12,
         maxLines: 14,
