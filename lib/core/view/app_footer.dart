@@ -23,7 +23,7 @@ class _AppFooterState extends State<AppFooter> {
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListenableBuilder(
-            listenable: widget.appModel.selectedNavItemNotifier,
+            listenable: widget.appModel,
             builder: (context, _) {
               return ListView.separated(
                 itemCount: widget.appModel.appRoutes.length,
@@ -61,12 +61,8 @@ class _AppFooterState extends State<AppFooter> {
     if (!getRouteAccessability(index)) {
       return;
     }
-    widget.appModel.selectedNavItemNotifier.value = NavItem.values[index];
-    widget.appModel.pageViewController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.bounceIn,
-    );
+    widget.appModel.selectedNavItem = NavItem.values[index];
+    widget.appModel.animateToPage(index);
     setState(() {});
   }
 

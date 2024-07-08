@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 
 class AppHeader extends StatelessWidget {
-  final ValueNotifier<NavItem> selectedNavItemNotifier;
+  final AppModel appModel;
   final bool shouldDisplayHelpBtn;
   final VoidCallback? onHelpClick;
 
   const AppHeader({
-    required this.selectedNavItemNotifier,
+    required this.appModel,
     this.onHelpClick,
     this.shouldDisplayHelpBtn = true,
     super.key,
@@ -20,9 +20,9 @@ class AppHeader extends StatelessWidget {
       height: 100,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      child: ValueListenableBuilder(
-        valueListenable: selectedNavItemNotifier,
-        builder: (BuildContext context, NavItem value, Widget? child) => Stack(
+      child: ListenableBuilder(
+        listenable: appModel,
+        builder: (BuildContext context, _) => Stack(
           children: [
             // TODO: callback from value
             Align(
@@ -38,7 +38,7 @@ class AppHeader extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                value.title,
+                appModel.currentRoute.navItem.title,
                 style: AppText.header,
               ),
             ),

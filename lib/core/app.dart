@@ -20,7 +20,7 @@ class _AppState extends State<App> {
     return MaterialApp(
       theme: AppTheme.themeData,
       home: Scaffold(
-        body: Provider(
+        body: ListenableProvider(
           create: (context) => appModel,
           child: ValueListenableBuilder(
             valueListenable: appModel.isInitializedNotifier,
@@ -29,10 +29,7 @@ class _AppState extends State<App> {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        AppHeader(
-                          selectedNavItemNotifier:
-                              appModel.selectedNavItemNotifier,
-                        ),
+                        AppHeader(appModel: appModel),
                         Expanded(
                           child: Container(
                             decoration:

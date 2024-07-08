@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
-import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
 import 'package:push_by_token_tester/google_auth_form/view/gooogle_auth_form_page.dart';
 import 'package:push_by_token_tester/push_sender_form/view/push_sender_form_page.dart';
 
-class AppModel {
+class AppModel extends ChangeNotifier {
   String? googleAuthJsonString;
   String? googleAuthToken;
   String? projectId;
   String? deviceToken;
-  final selectedNavItemNotifier = ValueNotifier(NavItem.jsonPage);
+  NavItem selectedNavItem = NavItem.jsonPage;
   final pageViewController = PageController();
   final isInitializedNotifier = ValueNotifier(false);
   late List<AppRoute> appRoutes;
-  late final api = PushApi(appModel: this);
+
+  AppRoute get currentRoute => appRoutes[selectedNavItem.index];
 
   AppModel() {
     appRoutes = <AppRoute>[
@@ -43,11 +43,17 @@ class AppModel {
   }
 
   void continueToNextStep() {
-    if (selectedNavItemNotifier.value.index == appRoutes.length - 1) return;
-    selectedNavItemNotifier.value =
-        NavItem.values[selectedNavItemNotifier.value.index + 1];
+    if (selectedNavItem.index == appRoutes.length - 1) return;
+    selectedNavItem = NavItem.values[selectedNavItem.index + 1];
+    animateToPage(selectedNavItem.index);
+    notify();
+  }
+
+  void notify() => notifyListeners();
+
+  void animateToPage(int index) {
     pageViewController.animateToPage(
-      selectedNavItemNotifier.value.index,
+      index,
       duration: const Duration(milliseconds: 200),
       curve: Curves.bounceIn,
     );

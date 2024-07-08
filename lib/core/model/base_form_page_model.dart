@@ -13,6 +13,7 @@ abstract class BaseFormPageModel {
   Future<void> submitForm();
 
   void resetForm() {
+    errorMsg = null;
     formStatusNotifier.value = FormStatus.notSended;
   }
 }

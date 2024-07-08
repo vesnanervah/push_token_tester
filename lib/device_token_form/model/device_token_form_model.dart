@@ -17,7 +17,7 @@ class DeviceTokenFormModel extends BaseFormPageModel {
   void resetForm() {
     appModel.deviceToken = null;
     deviceTokenFieldController.text = '';
-    errorMsg = null;
+    appModel.notify();
     super.resetForm();
   }
 

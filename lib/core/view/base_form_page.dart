@@ -16,8 +16,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
 
   late final AppModel appModel = context.read<AppModel>();
 
-  late final AppRoute currentRoute =
-      appModel.appRoutes[appModel.selectedNavItemNotifier.value.index];
+  late final AppRoute currentRoute = appModel.currentRoute;
 
   @override
   void initState() {

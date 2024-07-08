@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 
 class PushSenderFormModel extends BaseFormPageModel {
-  PushSenderFormModel({required super.appModel, required super.status});
+  final PushApi api;
+
+  PushSenderFormModel({required super.appModel, required super.status})
+      : api = PushApi(appModel: appModel);
 
   final titleController = TextEditingController();
   final textPushController = TextEditingController();
@@ -21,7 +25,7 @@ class PushSenderFormModel extends BaseFormPageModel {
   Future<void> submitForm() async {
     formStatusNotifier.value = FormStatus.loading;
     try {
-      final result = await appModel.api.sendPush(
+      final result = await api.sendPush(
         title: titleController.text,
         text: textPushController.text,
         body: bodyController.text,
