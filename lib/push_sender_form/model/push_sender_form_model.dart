@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
@@ -28,7 +30,7 @@ class PushSenderFormModel extends BaseFormPageModel {
       final result = await api.sendPush(
         title: titleController.text,
         text: textPushController.text,
-        body: bodyController.text,
+        body: jsonDecode(bodyController.text) as Map<String, dynamic>,
       );
       if (!result) {
         errorMsg = 'Что-то пошло не так';

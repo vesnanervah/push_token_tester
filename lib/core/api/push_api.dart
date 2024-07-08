@@ -23,7 +23,7 @@ class PushApi {
   Future<bool> sendPush({
     required String title,
     required String text,
-    required String body,
+    required Map<String, dynamic> body,
   }) async {
     try {
       final params = {
@@ -33,6 +33,8 @@ class PushApi {
             'title': title,
             'body': text,
           },
+          'data': body,
+
           /// todo: add data
         },
       };
