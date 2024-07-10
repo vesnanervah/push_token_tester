@@ -23,7 +23,7 @@ class DeviceTokenFormModel extends BaseFormPageModel {
 
   @override
   Future<void> submitForm() async {
-    appModel.deviceToken = deviceTokenFieldController.text;
+    appModel.deviceToken = deviceTokenFieldController.text.trim();
     appModel.continueToNextStep();
   }
 }

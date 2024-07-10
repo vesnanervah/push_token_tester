@@ -31,7 +31,7 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     formStatusNotifier.value = FormStatus.loading;
     print(jsonTextController.text);
     try {
-      final jsonData = jsonDecode(jsonTextController.text);
+      final jsonData = jsonDecode(jsonTextController.text.trim());
       client = await clientViaServiceAccount(
         ServiceAccountCredentials.fromJson(jsonData),
         [_firebaseMessagingScope],

@@ -28,9 +28,11 @@ class PushSenderFormModel extends BaseFormPageModel {
     formStatusNotifier.value = FormStatus.loading;
     try {
       final result = await api.sendPush(
-        title: titleController.text,
-        text: textPushController.text,
-        body: jsonDecode(bodyController.text) as Map<String, dynamic>,
+        title: titleController.text.trim(),
+        text: textPushController.text..trim(),
+        body: bodyController.text.trim().isNotEmpty
+            ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
+            : null,
       );
       if (!result) {
         errorMsg = 'Что-то пошло не так';
