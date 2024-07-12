@@ -20,10 +20,11 @@ class AppModel extends ChangeNotifier {
   AppModel() {
     appRoutes = <AppRoute>[
       AppRoute(
-        navItem: NavItem.jsonPage,
-        isAvailable: () => true,
-        body: const GoogleAuthFormPage(),
-      ),
+          navItem: NavItem.jsonPage,
+          isAvailable: () => true,
+          body: const GoogleAuthFormPage(),
+          faq:
+              'Страница проекта в console.firebase.google.com > Project setting(шестиренка справа от Project Overview) > Manage Service Accounts > Кликаем на сервисный аккаунт из списка (обычно всего один) > Вкладка KEYS > Add Key > Создаем ключ в JSON, он нам и нужен'),
       AppRoute(
         navItem: NavItem.deviceTokenPage,
         isAvailable: () =>
@@ -64,12 +65,14 @@ class AppRoute {
   final NavItem navItem;
   final bool Function() isAvailable;
   final Widget body;
+  final String? faq;
   FormStatus status;
 
   AppRoute({
     required this.navItem,
     required this.isAvailable,
     required this.body,
+    this.faq,
     this.status = FormStatus.notSended,
   });
 }
