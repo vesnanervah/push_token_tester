@@ -26,11 +26,12 @@ class AppModel extends ChangeNotifier {
           faq:
               'Страница проекта в console.firebase.google.com > Project setting(шестиренка справа от Project Overview) > Manage Service Accounts > Кликаем на сервисный аккаунт из списка (обычно всего один) > Вкладка KEYS > Add Key > Создаем ключ в JSON, он нам и нужен'),
       AppRoute(
-        navItem: NavItem.deviceTokenPage,
-        isAvailable: () =>
-            googleAuthJsonString != null && googleAuthToken != null,
-        body: const DeviceTokenFormPage(),
-      ),
+          navItem: NavItem.deviceTokenPage,
+          isAvailable: () =>
+              googleAuthJsonString != null && googleAuthToken != null,
+          body: const DeviceTokenFormPage(),
+          faq:
+              'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.'),
       AppRoute(
         navItem: NavItem.pushContentPage,
         isAvailable: () =>
