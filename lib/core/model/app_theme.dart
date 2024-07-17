@@ -53,6 +53,12 @@ class AppTheme {
   static final themeData = ThemeData(
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
+        padding: WidgetStatePropertyAll(
+          EdgeInsets.symmetric(horizontal: 24),
+        ),
+        fixedSize: WidgetStatePropertyAll(
+          Size.fromHeight(48),
+        ),
         elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),
       ),

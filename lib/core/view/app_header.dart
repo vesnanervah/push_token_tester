@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
@@ -50,11 +51,15 @@ class AppHeader extends StatelessWidget {
                   ),
                 ),
               ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                appModel.currentRoute.navItem.title,
-                style: AppText.header,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 192),
+              child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText(
+                  appModel.currentRoute.navItem.title,
+                  style: AppText.header,
+                  maxLines: 1,
+                ),
               ),
             ),
           ],
