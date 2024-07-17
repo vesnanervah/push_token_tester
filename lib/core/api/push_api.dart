@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:push_by_token_tester/core/model/app_model.dart';
 
 class PushApi {
@@ -20,35 +21,25 @@ class PushApi {
 
   Uri get getUrl => Uri.parse(url);
 
-  Future<bool> sendPush({
+  Future<Response> sendPush({
     required String title,
     required String text,
     Map<String, dynamic>? body,
   }) async {
-    try {
-      final params = {
-        'message': {
-          'token': appModel.deviceToken,
-          'notification': {
-            'title': title,
-            'body': text,
-          },
-          if (body != null) 'data': body,
-
-          /// todo: add data
+    final params = {
+      'message': {
+        'token': appModel.deviceToken,
+        'notification': {
+          'title': title,
+          'body': text,
         },
-      };
-      final response = await http.post(
-        getUrl,
-        headers: headers,
-        body: jsonEncode(params),
-      );
-      print(params);
-      print(response.body);
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
+        if (body != null) 'data': body,
+      },
+    };
+    return await http.post(
+      getUrl,
+      headers: headers,
+      body: jsonEncode(params),
+    );
   }
 }

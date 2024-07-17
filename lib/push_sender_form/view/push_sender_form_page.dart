@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
 import 'package:push_by_token_tester/core/view/base_form_page.dart';
@@ -34,6 +36,9 @@ class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
             controller: model.bodyController,
             maxLines: 4,
             decoration: const InputDecoration(hintText: 'Тело уведомления...'),
+            validator: (value) => jsonEncode(value) is Map<String, dynamic>
+                ? null
+                : 'Должен быть в формате Map<String, dynamic>',
           )
         ],
       );
