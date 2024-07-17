@@ -27,14 +27,19 @@ class PushSenderFormModel extends BaseFormPageModel {
   Future<void> submitForm() async {
     formStatusNotifier.value = FormStatus.loading;
     try {
-      await api.sendPush(
+      final response = await api.sendPush(
         title: titleController.text.trim(),
         text: textPushController.text.trim(),
         body: bodyController.text.trim().isNotEmpty
             ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
             : null,
       );
-      formStatusNotifier.value = FormStatus.successful;
+      if (response.statusCode >= 400) {
+        errorMsg = 'Ошибка на сервере';
+        formStatusNotifier.value = FormStatus.rejected;
+      } else {
+        formStatusNotifier.value = FormStatus.successful;
+      }
     } catch (_) {
       errorMsg = 'Что-то пошло не так';
       formStatusNotifier.value = FormStatus.rejected;

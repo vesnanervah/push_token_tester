@@ -40,9 +40,9 @@ class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
               if (value?.isEmpty ?? true) {
                 return null;
               }
-              return jsonDecode(value!) is Map<String, dynamic>
+              return jsonDecode(value!) is Map<String, String>
                   ? null
-                  : 'Должен быть в формате Map<String, dynamic>';
+                  : 'Должен быть в формате Map<String, String>';
             },
           )
         ],
