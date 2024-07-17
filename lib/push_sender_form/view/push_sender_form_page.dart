@@ -36,9 +36,14 @@ class _PushSenderFormPageState extends BaseFormPageState<PushSenderFormModel> {
             controller: model.bodyController,
             maxLines: 4,
             decoration: const InputDecoration(hintText: 'Тело уведомления...'),
-            validator: (value) => jsonEncode(value) is Map<String, dynamic>
-                ? null
-                : 'Должен быть в формате Map<String, dynamic>',
+            validator: (value) {
+              if (value?.isEmpty ?? true) {
+                return null;
+              }
+              return jsonDecode(value!) is Map<String, dynamic>
+                  ? null
+                  : 'Должен быть в формате Map<String, dynamic>';
+            },
           )
         ],
       );

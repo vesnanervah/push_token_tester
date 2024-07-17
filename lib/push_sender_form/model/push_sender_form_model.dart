@@ -29,7 +29,7 @@ class PushSenderFormModel extends BaseFormPageModel {
     try {
       await api.sendPush(
         title: titleController.text.trim(),
-        text: textPushController.text..trim(),
+        text: textPushController.text.trim(),
         body: bodyController.text.trim().isNotEmpty
             ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
             : null,
