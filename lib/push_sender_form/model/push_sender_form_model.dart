@@ -26,13 +26,21 @@ class PushSenderFormModel extends BaseFormPageModel {
   @override
   Future<void> submitForm() async {
     formStatusNotifier.value = FormStatus.loading;
+    Map<String, String>? body;
+    try {
+      body = bodyController.text.trim().isNotEmpty
+          ? jsonDecode(bodyController.text.trim()) as Map<String, String>
+          : null;
+    } catch (_) {
+      errorMsg =
+          'Не удалось спарсить body. Убедитесь, что оно в формате Map<String, String>';
+      formStatusNotifier.value = FormStatus.rejected;
+    }
     try {
       final response = await api.sendPush(
         title: titleController.text.trim(),
         text: textPushController.text.trim(),
-        body: bodyController.text.trim().isNotEmpty
-            ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
-            : null,
+        body: body,
       );
       if (response.statusCode >= 400) {
         errorMsg = 'Ошибка на сервере';
