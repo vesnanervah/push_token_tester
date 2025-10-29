@@ -22,32 +22,24 @@ class _AppState extends State<App> {
       home: Scaffold(
         body: ListenableProvider(
           create: (context) => appModel,
-          child: ValueListenableBuilder(
-            valueListenable: appModel.isInitializedNotifier,
-            builder: (context, value, child) {
-              return value
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        AppHeader(appModel: appModel),
-                        Expanded(
-                          child: Container(
-                            decoration:
-                                const BoxDecoration(color: AppColors.blackXxl),
-                            padding: const EdgeInsets.all(30),
-                            child: PageView.builder(
-                              controller: appModel.pageViewController,
-                              itemCount: appModel.appRoutes.length,
-                              itemBuilder: (context, index) =>
-                                  appModel.appRoutes[index].body,
-                            ),
-                          ),
-                        ),
-                        AppFooter(appModel: appModel),
-                      ],
-                    )
-                  : const Center(child: CircularProgressIndicator());
-            },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppHeader(appModel: appModel),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(color: AppColors.blackXxl),
+                  padding: const EdgeInsets.all(30),
+                  child: PageView.builder(
+                    controller: appModel.pageViewController,
+                    itemCount: appModel.appRoutes.length,
+                    itemBuilder: (context, index) =>
+                        appModel.appRoutes[index].body,
+                  ),
+                ),
+              ),
+              AppFooter(appModel: appModel),
+            ],
           ),
         ),
       ),

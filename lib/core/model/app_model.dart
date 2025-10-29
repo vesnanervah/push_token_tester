@@ -12,37 +12,33 @@ class AppModel extends ChangeNotifier {
   String? deviceToken;
   NavItem selectedNavItem = NavItem.jsonPage;
   final pageViewController = PageController();
-  final isInitializedNotifier = ValueNotifier(false);
-  late List<AppRoute> appRoutes;
+  late final appRoutes = [
+    AppRoute(
+      navItem: NavItem.jsonPage,
+      isAvailable: () => true,
+      body: const GoogleAuthFormPage(),
+      faq:
+          'Страница проекта в console.firebase.google.com > Project setting(шестиренка справа от Project Overview) > Manage Service Accounts > Кликаем на сервисный аккаунт из списка (обычно всего один) > Вкладка KEYS > Add Key > Создаем ключ в JSON, он нам и нужен',
+    ),
+    AppRoute(
+      navItem: NavItem.deviceTokenPage,
+      isAvailable: () =>
+          googleAuthJsonString != null && googleAuthToken != null,
+      body: const DeviceTokenFormPage(),
+      faq:
+          'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.',
+    ),
+    AppRoute(
+      navItem: NavItem.pushContentPage,
+      isAvailable: () =>
+          googleAuthJsonString != null &&
+          googleAuthToken != null &&
+          deviceToken != null,
+      body: const PushSenderFormPage(),
+    ),
+  ];
 
   AppRoute get currentRoute => appRoutes[selectedNavItem.index];
-
-  AppModel() {
-    appRoutes = <AppRoute>[
-      AppRoute(
-          navItem: NavItem.jsonPage,
-          isAvailable: () => true,
-          body: const GoogleAuthFormPage(),
-          faq:
-              'Страница проекта в console.firebase.google.com > Project setting(шестиренка справа от Project Overview) > Manage Service Accounts > Кликаем на сервисный аккаунт из списка (обычно всего один) > Вкладка KEYS > Add Key > Создаем ключ в JSON, он нам и нужен'),
-      AppRoute(
-          navItem: NavItem.deviceTokenPage,
-          isAvailable: () =>
-              googleAuthJsonString != null && googleAuthToken != null,
-          body: const DeviceTokenFormPage(),
-          faq:
-              'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.'),
-      AppRoute(
-        navItem: NavItem.pushContentPage,
-        isAvailable: () =>
-            googleAuthJsonString != null &&
-            googleAuthToken != null &&
-            deviceToken != null,
-        body: const PushSenderFormPage(),
-      )
-    ];
-    isInitializedNotifier.value = true;
-  }
 
   void continueToNextStep() {
     if (selectedNavItem.index == appRoutes.length - 1) return;
