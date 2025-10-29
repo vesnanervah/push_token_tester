@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
+abstract final class AppColors {
   static const pinkMain = Color(0xFFF3E5F5);
   static const pinkXxl = Color(0xFFEA80FC);
   static const pinkXl = Color(0xFFBA68C8);
@@ -12,7 +12,7 @@ class AppColors {
   static const blackXxl = Color.fromRGBO(28, 28, 28, 1);
 }
 
-class AppText {
+abstract final class AppText {
   static const header = TextStyle(
     color: AppColors.pinkMain,
     fontWeight: FontWeight.w500,
@@ -49,16 +49,13 @@ class AppText {
   );
 }
 
-class AppTheme {
+abstract final class AppTheme {
   static final themeData = ThemeData(
+    scaffoldBackgroundColor: AppColors.blackXxl,
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
-        padding: WidgetStatePropertyAll(
-          EdgeInsets.symmetric(horizontal: 24),
-        ),
-        fixedSize: WidgetStatePropertyAll(
-          Size.fromHeight(48),
-        ),
+        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
+        fixedSize: WidgetStatePropertyAll(Size.fromHeight(48)),
         elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),
       ),
@@ -73,9 +70,7 @@ class AppTheme {
       fillColor: AppColors.pinkMain,
       activeIndicatorBorder: BorderSide.none,
       outlineBorder: BorderSide.none,
-      errorStyle: const TextStyle(
-        color: AppColors.purpleXl,
-      ),
+      errorStyle: const TextStyle(color: AppColors.purpleXl),
       errorBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: AppColors.purpleXl, width: 1),
         borderRadius: BorderRadius.circular(12),

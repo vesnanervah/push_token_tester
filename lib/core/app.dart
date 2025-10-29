@@ -27,8 +27,7 @@ class _AppState extends State<App> {
             children: [
               AppHeader(appModel: appModel),
               Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(color: AppColors.blackXxl),
+                child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: PageView.builder(
                     controller: appModel.pageViewController,
