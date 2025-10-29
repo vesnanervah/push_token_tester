@@ -6,10 +6,7 @@ import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 class AppFooter extends StatefulWidget {
   final AppModel appModel;
 
-  const AppFooter({
-    required this.appModel,
-    super.key,
-  });
+  const AppFooter({required this.appModel, super.key});
 
   @override
   State<StatefulWidget> createState() => _AppFooterState();
@@ -19,23 +16,22 @@ class _AppFooterState extends State<AppFooter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 80,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListenableBuilder(
-            listenable: widget.appModel,
-            builder: (context, _) {
-              return ListView.separated(
-                itemCount: widget.appModel.appRoutes.length,
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 25,
-                ),
-                itemBuilder: (context, index) =>
-                    buildPageIndicator(context, index),
-              );
-            }),
+          listenable: widget.appModel,
+          builder: (context, _) {
+            return ListView.separated(
+              itemCount: widget.appModel.appRoutes.length,
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const SizedBox(width: 25),
+              itemBuilder: (context, index) =>
+                  buildPageIndicator(context, index),
+            );
+          },
+        ),
       ),
     );
   }

@@ -16,7 +16,7 @@ class AppHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 80,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: ListenableBuilder(
@@ -39,16 +39,14 @@ class AppHeader extends StatelessWidget {
                         ),
                         child: Text(
                           appModel.currentRoute.faq!,
-                          style:
-                              AppText.header.copyWith(color: AppColors.blackL),
+                          style: AppText.header.copyWith(
+                            color: AppColors.blackL,
+                          ),
                         ),
                       ),
                     );
                   },
-                  child: const Text(
-                    'где искать?',
-                    style: AppText.btnText,
-                  ),
+                  child: const Text('где искать?', style: AppText.btnText),
                 ),
               ),
             Padding(

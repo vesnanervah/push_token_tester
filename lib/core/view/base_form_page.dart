@@ -11,6 +11,8 @@ abstract class BaseFormPage extends StatefulWidget {
 
 abstract class BaseFormPageState<M extends BaseFormPageModel>
     extends State<BaseFormPage> {
+  abstract final String submitButtonText;
+
   final formKey = GlobalKey<FormState>();
   late final M model;
 
@@ -45,7 +47,7 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
           ValueListenableBuilder(
             valueListenable: model.formStatusNotifier,
             builder: (context, _, __) => buildStatusBlock(context),
-          )
+          ),
         ],
       ),
     );
@@ -55,131 +57,25 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
     final width = MediaQuery.of(context).size.width;
     if (width < 576) return buildFields(context);
     if (width < 768) {
-      return SizedBox(
-        width: width / 100 * 80,
-        child: buildFields(context),
-      );
+      return SizedBox(width: width / 100 * 80, child: buildFields(context));
     }
     if (width < 1100) {
-      return SizedBox(
-        width: width / 100 * 70,
-        child: buildFields(context),
-      );
+      return SizedBox(width: width / 100 * 70, child: buildFields(context));
     }
-    return SizedBox(
-      width: 768,
-      child: buildFields(context),
-    );
+    return SizedBox(width: 768, child: buildFields(context));
   }
 
   @protected
   Widget buildFields(BuildContext context);
 
   @protected
-  Widget buildStatusBlock(BuildContext context) =>
-      switch (model.formStatusNotifier.value) {
-        FormStatus.notSended => buildNotSendedStatusBlock(),
-        FormStatus.loading => buildLoadingStatusBlock(),
-        FormStatus.successful => buildSuccessfulStatusBlock(),
-        FormStatus.rejected => buildRejectedStatusBlock()
-      };
+  Widget buildStatusBlock(BuildContext context);
 
   @protected
-  Widget buildNotSendedStatusBlock() => ElevatedButton(
-        onPressed: () => trySubmit(),
-        child: Text(
-          getSubmitBtnText(),
-          style: AppText.btnText,
-        ),
-      );
-
-  @protected
-  Widget buildLoadingStatusBlock() => Column(
-        children: [
-          buildLoadingStatusBlockText(),
-          const SizedBox(height: 20),
-          const LinearProgressIndicator(),
-        ],
-      );
-
-  @protected
-  Widget buildRejectedStatusBlock() => Column(
-        children: [
-          Text.rich(
-            TextSpan(
-              style: AppText.statusCommonText,
-              children: [
-                const TextSpan(text: 'Ошибка: '),
-                TextSpan(
-                  text: model.errorMsg ?? 'Что-то пошло не так',
-                  style: AppText.statusAccentText,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => model.resetForm(),
-                child: const Text(
-                  'Сбросить',
-                  style: AppText.btnText,
-                ),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: () {
-                  model.submitForm();
-                },
-                child: const Text(
-                  'Повторить',
-                  style: AppText.btnText,
-                ),
-              )
-            ],
-          ),
-        ],
-      );
-
-  @protected
-  Widget buildSuccessfulStatusBlock() => Column(
-        children: [
-          buildSuccessfulStatusBlockText(),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () => model.resetForm(),
-                child: const Text(
-                  'Сбросить',
-                  style: AppText.btnText,
-                ),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: () {
-                  appModel.continueToNextStep();
-                },
-                child: const Text(
-                  'Продолжить',
-                  style: AppText.btnText,
-                ),
-              )
-            ],
-          ),
-        ],
-      );
-
-  @protected
-  Widget buildLoadingStatusBlockText();
-
-  @protected
-  Widget buildSuccessfulStatusBlockText();
-
-  String getSubmitBtnText();
+  Widget buildSubmitButton() => ElevatedButton(
+    onPressed: () => trySubmit(),
+    child: Text(submitButtonText, style: AppText.btnText),
+  );
 
   void trySubmit() async {
     if (!context.mounted) {
