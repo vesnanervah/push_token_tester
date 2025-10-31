@@ -16,7 +16,8 @@ class PushSenderFormPage extends BaseFormPage {
 class _PushSenderFormPageState
     extends BaseValidatedFormPageState<PushSenderFormModel> {
   @override
-  String get submitButtonText => 'Отправить';
+  String get submitButtonText =>
+      model.formStatusNotifier.value.isSuccessful ? 'Повторить' : 'Отправить';
 
   @override
   PushSenderFormModel createModel() =>
@@ -88,17 +89,9 @@ class _PushSenderFormPageState
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: () => model.resetForm(),
-            child: const Text('Сбросить', style: AppText.btnText),
-          ),
+          buildResetButton(),
           const SizedBox(width: 20),
-          ElevatedButton(
-            onPressed: () {
-              trySubmit();
-            },
-            child: const Text('Повторить', style: AppText.btnText),
-          ),
+          buildSubmitButton(),
         ],
       ),
     ],

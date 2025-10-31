@@ -3,4 +3,6 @@ enum FormStatus {
   loading,
   successful,
   rejected;
+
+  bool get isSuccessful => this == FormStatus.successful;
 }

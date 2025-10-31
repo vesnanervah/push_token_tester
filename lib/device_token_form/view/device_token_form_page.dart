@@ -13,7 +13,7 @@ class DeviceTokenFormPage extends BaseFormPage {
 class _DeviceTokenFormPageState
     extends BaseFormPageState<DeviceTokenFormModel> {
   @override
-  get submitButtonText => 'Продолжитьs';
+  get submitButtonText => 'Продолжить';
 
   @override
   DeviceTokenFormModel createModel() =>

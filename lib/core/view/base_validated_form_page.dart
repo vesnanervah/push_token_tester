@@ -50,10 +50,7 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: () => model.resetForm(),
-            child: const Text('Сбросить', style: AppText.btnText),
-          ),
+          buildResetButton(),
           const SizedBox(width: 20),
           ElevatedButton(
             onPressed: () {
@@ -74,10 +71,7 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            onPressed: () => model.resetForm(),
-            child: const Text('Сбросить', style: AppText.btnText),
-          ),
+          buildResetButton(),
           const SizedBox(width: 20),
           ElevatedButton(
             onPressed: () {
@@ -95,4 +89,9 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
 
   @protected
   Widget buildSuccessfulStatusBlockText();
+
+  Widget buildResetButton() => ElevatedButton(
+    onPressed: () => model.resetForm(),
+    child: const Text('Сбросить', style: AppText.btnText),
+  );
 }
