@@ -1,15 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:push_by_token_tester/core/api/push_api.dart';
 import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
+import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
 
 class PushSenderFormModel extends BaseFormPageModel {
-  final PushApi api;
+  final PushRepository api = PushRepository();
 
-  PushSenderFormModel({required super.appModel, required super.status})
-      : api = PushApi(appModel: appModel);
+  PushSenderFormModel({required super.appModel, required super.status});
 
   final titleController = TextEditingController();
   final textPushController = TextEditingController();
@@ -38,9 +37,11 @@ class PushSenderFormModel extends BaseFormPageModel {
     }
     try {
       final response = await api.sendPush(
+        appModel.authClient!,
         title: titleController.text.trim(),
         text: textPushController.text.trim(),
         body: body,
+        projectId: appModel.projectId!,
       );
       if (response.statusCode >= 400) {
         errorMsg = 'Ошибка на сервере';

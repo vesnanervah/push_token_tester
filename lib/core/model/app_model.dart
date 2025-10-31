@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
@@ -6,8 +7,7 @@ import 'package:push_by_token_tester/google_auth_form/view/gooogle_auth_form_pag
 import 'package:push_by_token_tester/push_sender_form/view/push_sender_form_page.dart';
 
 class AppModel extends ChangeNotifier {
-  String? googleAuthJsonString;
-  String? googleAuthToken;
+  AuthClient? authClient;
   String? projectId;
   String? deviceToken;
   NavItem selectedNavItem = NavItem.jsonPage;
@@ -22,18 +22,14 @@ class AppModel extends ChangeNotifier {
     ),
     AppRoute(
       navItem: NavItem.deviceTokenPage,
-      isAvailable: () =>
-          googleAuthJsonString != null && googleAuthToken != null,
+      isAvailable: () => authClient != null,
       body: const DeviceTokenFormPage(),
       faq:
           'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.',
     ),
     AppRoute(
       navItem: NavItem.pushContentPage,
-      isAvailable: () =>
-          googleAuthJsonString != null &&
-          googleAuthToken != null &&
-          deviceToken != null,
+      isAvailable: () => authClient != null && deviceToken != null,
       body: const PushSenderFormPage(),
     ),
   ];

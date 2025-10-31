@@ -10,19 +10,13 @@ class GoogleAuthFormModel extends BaseFormPageModel {
   final repository = GoogleAuthClientRepository();
   AuthClient? client;
 
-  GoogleAuthFormModel({required super.appModel, required super.status}) {
-    if (appModel.googleAuthJsonString?.isNotEmpty ?? false) {
-      jsonTextController.text = appModel.googleAuthJsonString!;
-    }
-  }
+  GoogleAuthFormModel({required super.appModel, required super.status});
 
   @override
   void resetForm() {
     client?.close();
     client = null;
     jsonTextController.text = '';
-    appModel.googleAuthJsonString = null;
-    appModel.googleAuthToken = null;
     appModel.notify();
     super.resetForm();
   }
@@ -34,9 +28,13 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     try {
       final jsonData = jsonDecode(jsonTextController.text.trim());
       client = await repository.retrieveAuthClient(jsonData);
-      appModel.projectId = jsonData['project_id'];
-      appModel.googleAuthToken = client!.credentials.accessToken.data;
-      appModel.googleAuthJsonString = jsonTextController.text;
+      final projectId = jsonData['project_id'];
+      if (projectId is! String) {
+        errorMsg = 'Не найден project_id';
+        formStatusNotifier.value = FormStatus.rejected;
+        return;
+      }
+      appModel.projectId = projectId;
       formStatusNotifier.value = FormStatus.successful;
     } catch (e) {
       // TODO: обработка ошибок
