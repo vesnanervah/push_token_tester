@@ -8,14 +8,14 @@ import 'package:push_by_token_tester/google_auth_form/repository/google_auth_cli
 class GoogleAuthFormModel extends BaseFormPageModel {
   final jsonTextController = TextEditingController();
   final repository = GoogleAuthClientRepository();
-  AuthClient? client;
+  AuthClient? get client => appModel.authClient;
 
   GoogleAuthFormModel({required super.appModel, required super.status});
 
   @override
   void resetForm() {
     client?.close();
-    client = null;
+    appModel.authClient = null;
     jsonTextController.text = '';
     appModel.projectId = null;
     appModel.notify();
@@ -28,7 +28,7 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     print(jsonTextController.text);
     try {
       final jsonData = jsonDecode(jsonTextController.text.trim());
-      client = await repository.retrieveAuthClient(jsonData);
+      appModel.authClient = await repository.retrieveAuthClient(jsonData);
       final projectId = jsonData['project_id'];
       if (projectId is! String) {
         errorMsg = 'Не найден project_id';

@@ -25,10 +25,10 @@ class PushSenderFormModel extends BaseFormPageModel {
   @override
   Future<void> submitForm() async {
     formStatusNotifier.value = FormStatus.loading;
-    Map<String, String>? body;
+    Map<String, dynamic>? body;
     try {
       body = bodyController.text.trim().isNotEmpty
-          ? jsonDecode(bodyController.text.trim()) as Map<String, String>
+          ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
           : null;
     } catch (_) {
       errorMsg =
