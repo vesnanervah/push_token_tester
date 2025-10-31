@@ -18,7 +18,7 @@ class AppHeader extends StatelessWidget {
     return Container(
       height: 80,
       decoration: const BoxDecoration(color: AppColors.blackXl),
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: ListenableBuilder(
         listenable: appModel,
         builder: (BuildContext context, _) => Stack(
