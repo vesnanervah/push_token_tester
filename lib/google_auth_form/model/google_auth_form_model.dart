@@ -17,6 +17,7 @@ class GoogleAuthFormModel extends BaseFormPageModel {
     client?.close();
     client = null;
     jsonTextController.text = '';
+    appModel.projectId = null;
     appModel.notify();
     super.resetForm();
   }
