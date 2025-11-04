@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:push_by_token_tester/core/base_form/bloc/base_form_event.dart';
-import 'package:push_by_token_tester/core/base_form/bloc/base_form_state.dart';
+
+part 'base_form_event.dart';
+part 'base_form_state.dart';
 
 abstract class BaseFormBloc extends Bloc<BaseFormEvent, BaseFormState> {
   BaseFormBloc() : super(BaseFormState.initial()) {

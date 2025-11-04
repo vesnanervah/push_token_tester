@@ -1,3 +1,5 @@
+part of 'base_form_bloc.dart';
+
 class BaseFormState {
   final FormStatus status;
   final String? error;
