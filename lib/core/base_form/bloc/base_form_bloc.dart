@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 
 part 'base_form_event.dart';
 part 'base_form_state.dart';
@@ -7,6 +8,7 @@ part 'base_form_state.dart';
 abstract class BaseFormBloc extends Bloc<BaseFormEvent, BaseFormState> {
   BaseFormBloc() : super(BaseFormState.initial()) {
     on<SubmitForm>(submitForm);
+    on<ResetForm>(resetForm);
   }
 
   Future<void> submitForm(BaseFormEvent event, Emitter<BaseFormState> emit);

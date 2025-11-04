@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
-import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 import 'package:push_by_token_tester/google_auth_form/repository/google_auth_client_repository.dart';
 
 class GoogleAuthFormModel extends BaseFormPageModel {

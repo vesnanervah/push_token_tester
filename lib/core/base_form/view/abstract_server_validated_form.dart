@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/core/base_form/view/abstract_form.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
-import 'package:push_by_token_tester/core/model/entities/form_status.dart';
-import 'package:push_by_token_tester/core/view/base_form_page.dart';
 
-abstract class BaseValidatedFormPage extends BaseFormPage {
-  const BaseValidatedFormPage({super.key});
-}
-
-abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
-    extends BaseFormPageState<M> {
+abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
+    extends AbstractForm<B> {
   @override
   Widget buildStatusBlock(BuildContext context) =>
-      switch (model.formStatusNotifier.value) {
-        FormStatus.notSended => buildNotSendedStatusBlock(),
+      switch (formBloc.state.status) {
+        FormStatus.initial => buildNotSendedStatusBlock(),
         FormStatus.loading => buildLoadingStatusBlock(),
         FormStatus.successful => buildSuccessfulStatusBlock(),
         FormStatus.rejected => buildRejectedStatusBlock(),
@@ -40,7 +35,7 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
           children: [
             const TextSpan(text: 'Ошибка: '),
             TextSpan(
-              text: model.errorMsg ?? 'Что-то пошло не так',
+              text: formBloc.state.error ?? 'Что-то пошло не так',
               style: AppText.statusAccentText,
             ),
           ],
@@ -54,7 +49,7 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
           const SizedBox(width: 20),
           ElevatedButton(
             onPressed: () {
-              model.submitForm();
+              formBloc.add(ResetForm());
             },
             child: const Text('Повторить', style: AppText.btnText),
           ),
@@ -91,7 +86,7 @@ abstract class BaseValidatedFormPageState<M extends BaseFormPageModel>
   Widget buildSuccessfulStatusBlockText();
 
   Widget buildResetButton() => ElevatedButton(
-    onPressed: () => model.resetForm(),
+    onPressed: () => formBloc.add(SubmitForm()),
     child: const Text('Сбросить', style: AppText.btnText),
   );
 }

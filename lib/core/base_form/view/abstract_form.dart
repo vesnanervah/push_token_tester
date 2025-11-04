@@ -1,39 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:push_by_token_tester/core/base_form/bloc/bloc.dart';
 import 'package:push_by_token_tester/core/model/app_model.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/model/base_form_page_model.dart';
-import 'package:push_by_token_tester/core/model/entities/form_status.dart';
 
-abstract class BaseFormPage extends StatefulWidget {
-  const BaseFormPage({super.key});
-}
-
-abstract class BaseFormPageState<M extends BaseFormPageModel>
-    extends State<BaseFormPage> {
+abstract class AbstractForm<B extends BaseFormBloc>
+    extends State<StatefulWidget> {
   abstract final String submitButtonText;
 
   final formKey = GlobalKey<FormState>();
-  late final M model;
 
   late final AppModel appModel = context.read<AppModel>();
 
   late final AppRoute currentRoute = appModel.currentRoute;
 
-  @override
-  void initState() {
-    super.initState();
-    model = createModel();
-  }
-
-  @override
-  void dispose() {
-    currentRoute.status = model.formStatusNotifier.value;
-    super.dispose();
-  }
-
-  @protected
-  M createModel();
+  B get formBloc => context.read<B>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +25,11 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
           const Spacer(flex: 4),
           wrapFieldsWithConstraints(context),
           const Spacer(flex: 2),
-          ValueListenableBuilder(
-            valueListenable: model.formStatusNotifier,
-            builder: (context, _, __) => buildStatusBlock(context),
+          BlocConsumer<B, BaseFormState>(
+            listener: (context, state) {
+              currentRoute.status = state.status;
+            },
+            builder: (context, state) => buildStatusBlock(context),
           ),
         ],
       ),
@@ -81,11 +64,8 @@ abstract class BaseFormPageState<M extends BaseFormPageModel>
     if (!context.mounted) {
       return;
     }
-    if (model.formStatusNotifier.value == FormStatus.loading) {
-      return;
-    }
     if (formKey.currentState?.validate() ?? false) {
-      model.submitForm();
+      formBloc.add(SubmitForm());
     }
   }
 }

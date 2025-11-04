@@ -1,5 +1,6 @@
 part of 'base_form_bloc.dart';
 
+@immutable
 class BaseFormState extends Equatable {
   final FormStatus status;
   final String? error;
