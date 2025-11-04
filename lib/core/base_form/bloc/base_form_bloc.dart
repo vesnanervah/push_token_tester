@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 
 part 'base_form_event.dart';
 part 'base_form_state.dart';

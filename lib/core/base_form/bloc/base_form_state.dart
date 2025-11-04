@@ -1,18 +1,21 @@
 part of 'base_form_bloc.dart';
 
-class BaseFormState {
+class BaseFormState extends Equatable {
   final FormStatus status;
   final String? error;
 
-  BaseFormState._({this.status = FormStatus.initial, this.error = null});
+  const BaseFormState._({this.status = FormStatus.initial, this.error});
 
-  factory BaseFormState.initial() => BaseFormState._();
+  factory BaseFormState.initial() => const BaseFormState._();
   factory BaseFormState.loading() =>
-      BaseFormState._(status: FormStatus.loading);
+      const BaseFormState._(status: FormStatus.loading);
   factory BaseFormState.successful() =>
-      BaseFormState._(status: FormStatus.successful);
+      const BaseFormState._(status: FormStatus.successful);
   factory BaseFormState.rejected(String error) =>
       BaseFormState._(status: FormStatus.rejected, error: error);
+
+  @override
+  List<Object?> get props => [status, error];
 }
 
 enum FormStatus { initial, loading, successful, rejected }
