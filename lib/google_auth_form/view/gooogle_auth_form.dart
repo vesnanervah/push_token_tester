@@ -1,17 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:push_by_token_tester/core/base_form/view/abstract_server_validated_form.dart';
-import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/google_auth_form/bloc/google_auth_bloc.dart';
+part of 'google_auth_form_page.dart';
 
-class GoogleAuthFormPage extends StatefulWidget {
-  const GoogleAuthFormPage({super.key});
+class _GoogleAuthForm extends StatefulWidget {
+  const _GoogleAuthForm();
 
   @override
-  State<StatefulWidget> createState() => _GoogleAuthFormPageState();
+  State<StatefulWidget> createState() => _GoogleAuthFormState();
 }
 
-class _GoogleAuthFormPageState
-    extends AbstractServerValidatedForm<GoogleAuthBloc> {
+class _GoogleAuthFormState extends AbstractServerValidatedForm<GoogleAuthBloc> {
   @override
   get submitButtonText => 'Отправить';
 
