@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:push_by_token_tester/core/base_form/view/abstract_server_validated_form.dart';
 import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/view/base_form_page.dart';
-import 'package:push_by_token_tester/core/view/base_validated_form_page.dart';
-import 'package:push_by_token_tester/google_auth_form/model/google_auth_form_model.dart';
+import 'package:push_by_token_tester/google_auth_form/bloc/google_auth_bloc.dart';
 
-class GoogleAuthFormPage extends BaseFormPage {
+class GoogleAuthFormPage extends StatefulWidget {
   const GoogleAuthFormPage({super.key});
 
   @override
@@ -12,18 +11,15 @@ class GoogleAuthFormPage extends BaseFormPage {
 }
 
 class _GoogleAuthFormPageState
-    extends BaseValidatedFormPageState<GoogleAuthFormModel> {
+    extends AbstractServerValidatedForm<GoogleAuthBloc> {
   @override
   get submitButtonText => 'Отправить';
 
   @override
-  GoogleAuthFormModel createModel() =>
-      GoogleAuthFormModel(appModel: appModel, status: currentRoute.status);
-
-  @override
   Widget buildFields(BuildContext context) => TextFormField(
     minLines: 12,
-    controller: model.jsonTextController,
+    //TODO(Zverev): controller isn't a good mix with bloc. Replace with onChange.
+    controller: formBloc.jsonTextController,
     maxLines: 14,
     decoration: const InputDecoration(hintText: _credentialsJsonPlaceholer),
     validator: (value) =>
