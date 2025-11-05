@@ -1,4 +1,4 @@
-part of 'google_auth_form_page.dart';
+part of 'google_auth_page.dart';
 
 class _GoogleAuthForm extends StatefulWidget {
   const _GoogleAuthForm();

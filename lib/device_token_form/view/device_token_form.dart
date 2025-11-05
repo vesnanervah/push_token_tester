@@ -1,27 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/view/base_form_page.dart';
-import 'package:push_by_token_tester/device_token_form/model/device_token_form_model.dart';
+part of 'device_token_page.dart';
 
-class DeviceTokenFormPage extends BaseFormPage {
-  const DeviceTokenFormPage({super.key});
+class _DeviceTokenForm extends StatefulWidget {
+  const _DeviceTokenForm({super.key});
 
   @override
-  State<StatefulWidget> createState() => _DeviceTokenFormPageState();
+  State<StatefulWidget> createState() => _DeviceTokenFormState();
 }
 
-class _DeviceTokenFormPageState
-    extends BaseFormPageState<DeviceTokenFormModel> {
+class _DeviceTokenFormState extends AbstractForm<DeviceTokenBloc> {
   @override
   get submitButtonText => 'Продолжить';
 
   @override
-  DeviceTokenFormModel createModel() =>
-      DeviceTokenFormModel(appModel: appModel, status: currentRoute.status);
-
-  @override
   Widget buildFields(BuildContext context) => TextFormField(
-    controller: model.deviceTokenFieldController,
+    // TODO(Zverev): hold value in state
+    controller: formBloc.deviceTokenFieldController,
     decoration: const InputDecoration(hintText: 'Девайс токен...'),
     minLines: 12,
     maxLines: 14,

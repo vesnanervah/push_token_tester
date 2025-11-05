@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/core/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
-import 'package:push_by_token_tester/device_token_form/view/device_token_form_page.dart';
-import 'package:push_by_token_tester/google_auth_form/view/google_auth_form_page.dart';
+import 'package:push_by_token_tester/device_token_form/view/device_token_page.dart';
+import 'package:push_by_token_tester/google_auth_form/view/google_auth_page.dart';
 import 'package:push_by_token_tester/push_sender_form/view/push_sender_form_page.dart';
 
 class AppModel extends ChangeNotifier {
@@ -23,7 +23,7 @@ class AppModel extends ChangeNotifier {
     AppRoute(
       navItem: NavItem.deviceTokenPage,
       isAvailable: () => authClient != null,
-      body: const DeviceTokenFormPage(),
+      body: const DeviceTokenPage(),
       faq:
           'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.',
     ),
