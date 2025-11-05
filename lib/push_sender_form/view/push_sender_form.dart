@@ -1,45 +1,33 @@
-import 'dart:convert';
+part of 'push_sender_page.dart';
 
-import 'package:flutter/material.dart';
-import 'package:push_by_token_tester/core/model/app_theme.dart';
-import 'package:push_by_token_tester/core/view/base_form_page.dart';
-import 'package:push_by_token_tester/core/view/base_validated_form_page.dart';
-import 'package:push_by_token_tester/push_sender_form/model/push_sender_form_model.dart';
-
-class PushSenderFormPage extends BaseFormPage {
-  const PushSenderFormPage({super.key});
-
+class _PushSenderForm extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _PushSenderFormPageState();
+  State<StatefulWidget> createState() => _PushSenderFormState();
 }
 
-class _PushSenderFormPageState
-    extends BaseValidatedFormPageState<PushSenderFormModel> {
+class _PushSenderFormState extends AbstractServerValidatedForm<PushSenderBloc> {
   @override
   String get submitButtonText =>
-      model.formStatusNotifier.value.isSuccessful ? 'Повторить' : 'Отправить';
-
-  @override
-  PushSenderFormModel createModel() =>
-      PushSenderFormModel(appModel: appModel, status: currentRoute.status);
+      formBloc.state.status.isSuccessful ? 'Повторить' : 'Отправить';
 
   @override
   Widget buildFields(BuildContext context) => Column(
     children: [
+      //TODO(Zverev): do not use controllers, hold values in state
       TextFormField(
-        controller: model.titleController,
+        controller: formBloc.titleController,
         maxLines: 1,
         decoration: const InputDecoration(hintText: 'Заголовок...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        controller: model.textPushController,
+        controller: formBloc.textPushController,
         maxLines: 1,
         decoration: const InputDecoration(hintText: 'Текст уведомления...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        controller: model.bodyController,
+        controller: formBloc.bodyController,
         maxLines: 4,
         decoration: const InputDecoration(hintText: 'Тело уведомления...'),
         validator: (value) {
@@ -47,6 +35,7 @@ class _PushSenderFormPageState
             return null;
           }
           try {
+            //TODO(Zverev): wrap in method
             final res = jsonDecode(value!) is Map
                 ? null
                 : 'Должен быть в формате Map<String, String>';

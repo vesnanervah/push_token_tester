@@ -10,6 +10,12 @@ class DeviceTokenBloc extends BaseFormBloc {
   DeviceTokenBloc(super.appModel);
 
   @override
+  Future<void> close() {
+    deviceTokenFieldController.dispose();
+    return super.close();
+  }
+
+  @override
   Future<void> submitForm(
     BaseFormEvent event,
     Emitter<BaseFormState> emit,
