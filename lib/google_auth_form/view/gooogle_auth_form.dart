@@ -7,15 +7,31 @@ class _GoogleAuthForm extends StatefulWidget {
   State<StatefulWidget> createState() => _GoogleAuthFormState();
 }
 
-class _GoogleAuthFormState extends AbstractServerValidatedForm<GoogleAuthBloc> {
+class _GoogleAuthFormState
+    extends AbstractServerValidatedForm<GoogleAuthState, GoogleAuthBloc> {
+  final jsonTextController = TextEditingController();
+
   @override
   get submitButtonText => 'Отправить';
 
   @override
+  void initState() {
+    super.initState();
+    jsonTextController.addListener(
+      () => formBloc.add(GoogleAuthJsonChange(jsonTextController.text)),
+    );
+  }
+
+  @override
+  void dispose() {
+    jsonTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget buildFields(BuildContext context) => TextFormField(
     minLines: 12,
-    //TODO(Zverev): controller isn't a good mix with bloc. Replace with onChange.
-    controller: formBloc.jsonTextController,
+    controller: jsonTextController,
     maxLines: 14,
     decoration: const InputDecoration(hintText: _credentialsJsonPlaceholer),
     validator: (value) =>
@@ -45,6 +61,16 @@ class _GoogleAuthFormState extends AbstractServerValidatedForm<GoogleAuthBloc> {
       ],
     ),
   );
+
+  @override
+  void onFormStateUpdate(BuildContext context, GoogleAuthState state) {
+    appBloc.add(
+      AppAuthClientChanged(
+        authClient: state.authClient,
+        projectId: state.projectId,
+      ),
+    );
+  }
 }
 
 const _credentialsJsonPlaceholer = '''

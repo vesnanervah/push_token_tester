@@ -5,7 +5,8 @@ class _PushSenderForm extends StatefulWidget {
   State<StatefulWidget> createState() => _PushSenderFormState();
 }
 
-class _PushSenderFormState extends AbstractServerValidatedForm<PushSenderBloc> {
+class _PushSenderFormState
+    extends AbstractServerValidatedForm<BaseFormState, PushSenderBloc> {
   @override
   String get submitButtonText =>
       formBloc.state.status.isSuccessful ? 'Повторить' : 'Отправить';

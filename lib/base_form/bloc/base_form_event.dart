@@ -1,7 +1,13 @@
 part of 'base_form_bloc.dart';
 
-sealed class BaseFormEvent {}
+class BaseFormEvent {
+  const BaseFormEvent();
+}
 
-class SubmitForm extends BaseFormEvent {}
+class SubmitForm extends BaseFormEvent {
+  const SubmitForm();
+}
 
-class ResetForm extends BaseFormEvent {}
+class ResetForm extends BaseFormEvent {
+  const ResetForm();
+}

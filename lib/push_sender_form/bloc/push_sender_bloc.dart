@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
 
@@ -10,8 +11,14 @@ class PushSenderBloc extends BaseFormBloc {
   final titleController = TextEditingController();
   final textPushController = TextEditingController();
   final bodyController = TextEditingController();
+  final AuthClient authClient;
+  final String projectId;
 
-  PushSenderBloc(this.repository, super.appModel);
+  PushSenderBloc(
+    this.repository, {
+    required this.authClient,
+    required this.projectId,
+  }) : super(BaseFormState.initial());
 
   @override
   Future<void> close() {
@@ -41,11 +48,11 @@ class PushSenderBloc extends BaseFormBloc {
     }
     try {
       final response = await repository.sendPush(
-        appModel.authClient!,
+        authClient,
         title: titleController.text.trim(),
         text: textPushController.text.trim(),
         body: body,
-        projectId: appModel.projectId!,
+        projectId: projectId,
       );
       if (response.statusCode >= 400) {
         emit(BaseFormState.rejected('Ошибка на сервере'));
@@ -62,6 +69,6 @@ class PushSenderBloc extends BaseFormBloc {
     titleController.text = '';
     textPushController.text = '';
     bodyController.text = '';
-    super.resetForm(event, emit);
+    emit(BaseFormState.initial());
   }
 }

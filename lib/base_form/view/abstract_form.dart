@@ -4,15 +4,15 @@ import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
 import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
 
-abstract class AbstractForm<B extends BaseFormBloc>
+abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
     extends State<StatefulWidget> {
   abstract final String submitButtonText;
 
   final formKey = GlobalKey<FormState>();
 
-  late final AppBloc appModel = context.read<AppBloc>();
+  late final AppBloc appBloc = context.read<AppBloc>();
 
-  late final AppRoute currentRoute = appModel.currentRoute;
+  late final AppRoute currentRoute = appBloc.currentRoute;
 
   B get formBloc => context.read<B>();
 
@@ -25,7 +25,8 @@ abstract class AbstractForm<B extends BaseFormBloc>
           const Spacer(flex: 4),
           wrapFieldsWithConstraints(context),
           const Spacer(flex: 2),
-          BlocBuilder<B, BaseFormState>(
+          BlocConsumer<B, S>(
+            listener: onFormStateUpdate,
             builder: (context, state) => buildStatusBlock(context),
           ),
         ],
@@ -62,9 +63,11 @@ abstract class AbstractForm<B extends BaseFormBloc>
       return;
     }
     if (validate()) {
-      formBloc.add(SubmitForm());
+      formBloc.add(const SubmitForm());
     }
   }
 
   bool validate() => formKey.currentState?.validate() ?? false;
+
+  void onFormStateUpdate(BuildContext context, S state) {}
 }

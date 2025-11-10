@@ -5,8 +5,11 @@ import 'package:push_by_token_tester/base_form/view/abstract_form.dart';
 import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
 
-abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
-    extends AbstractForm<B> {
+abstract class AbstractServerValidatedForm<
+  S extends BaseFormState,
+  B extends BaseFormBloc<S>
+>
+    extends AbstractForm<S, B> {
   @override
   Widget buildStatusBlock(BuildContext context) =>
       switch (formBloc.state.status) {
@@ -51,7 +54,7 @@ abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
           const SizedBox(width: 20),
           ElevatedButton(
             onPressed: () {
-              formBloc.add(ResetForm());
+              formBloc.add(const ResetForm());
             },
             child: const Text('Повторить', style: AppText.btnText),
           ),
@@ -87,7 +90,7 @@ abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
   Widget buildSuccessfulStatusBlockText();
 
   Widget buildResetButton() => ElevatedButton(
-    onPressed: () => formBloc.add(SubmitForm()),
+    onPressed: () => formBloc.add(const SubmitForm()),
     child: const Text('Сбросить', style: AppText.btnText),
   );
 }

@@ -7,9 +7,10 @@ class _DeviceTokenForm extends StatefulWidget {
   State<StatefulWidget> createState() => _DeviceTokenFormState();
 }
 
-class _DeviceTokenFormState extends AbstractForm<DeviceTokenBloc> {
+class _DeviceTokenFormState
+    extends AbstractForm<BaseFormState, DeviceTokenBloc> {
   late final TextEditingController deviceTokenFieldController =
-      TextEditingController(text: appModel.state.deviceToken);
+      TextEditingController(text: appBloc.state.deviceToken);
 
   @override
   get submitButtonText => 'Продолжить';
@@ -48,10 +49,11 @@ class _DeviceTokenFormState extends AbstractForm<DeviceTokenBloc> {
   );
 
   @override
-  void trySubmit() {
-    if (!validate()) return;
-    appModel.add(
-      AppDeviceTokenSelected(deviceTokenFieldController.text.trim()),
-    );
+  onFormStateUpdate(BuildContext context, BaseFormState state) {
+    if (state.status.isSuccessful) {
+      appBloc.add(
+        AppDeviceTokenSelected(deviceTokenFieldController.text.trim()),
+      );
+    }
   }
 }

@@ -6,15 +6,15 @@ class BaseFormState extends Equatable {
   final FormStatus status;
   final String? error;
 
-  const BaseFormState._({this.status = FormStatus.initial, this.error});
+  const BaseFormState({this.status = FormStatus.initial, this.error});
 
-  factory BaseFormState.initial() => const BaseFormState._();
+  factory BaseFormState.initial() => const BaseFormState();
   factory BaseFormState.loading() =>
-      const BaseFormState._(status: FormStatus.loading);
+      const BaseFormState(status: FormStatus.loading);
   factory BaseFormState.successful() =>
-      const BaseFormState._(status: FormStatus.successful);
+      const BaseFormState(status: FormStatus.successful);
   factory BaseFormState.rejected(String error) =>
-      BaseFormState._(status: FormStatus.rejected, error: error);
+      BaseFormState(status: FormStatus.rejected, error: error);
 
   @override
   List<Object?> get props => [status, error];

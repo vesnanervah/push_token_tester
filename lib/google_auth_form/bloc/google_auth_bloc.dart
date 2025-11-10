@@ -6,50 +6,50 @@ import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
 import 'package:push_by_token_tester/google_auth_form/repository/google_auth_client_repository.dart';
 
-class GoogleAuthBloc extends BaseFormBloc {
-  // TODO(Zverev): controller should be private and expose its value via state
-  final jsonTextController = TextEditingController();
+part 'google_auth_state.dart';
+part 'google_auth_event.dart';
+
+class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
   final GoogleAuthClientRepository repository;
-
-  GoogleAuthBloc(this.repository);
-  AuthClient? get client => appModel.authClient;
-
-  @override
-  Future<void> close() {
-    jsonTextController.dispose();
-    return super.close();
+  String _jsonValue = '';
+  GoogleAuthBloc(this.repository) : super(GoogleAuthState.initial()) {
+    on<GoogleAuthJsonChange>(onGoogleAuthJsonChange);
   }
 
   @override
   Future<void> submitForm(
     BaseFormEvent event,
-    Emitter<BaseFormState> emit,
+    Emitter<GoogleAuthState> emit,
   ) async {
-    emit(BaseFormState.loading());
+    emit(GoogleAuthState.loading());
     try {
-      final jsonData = jsonDecode(jsonTextController.text.trim());
-      appModel.authClient = await repository.retrieveAuthClient(jsonData);
+      final jsonData = jsonDecode(_jsonValue.trim());
+      final client = await repository.retrieveAuthClient(jsonData);
       final projectId = jsonData['project_id'];
       if (projectId is! String) {
-        return emit(BaseFormState.rejected('Не найден project_id'));
+        return emit(GoogleAuthState.rejected('Не найден project_id'));
       }
-      appModel.projectId = projectId;
-      emit(BaseFormState.successful());
+      emit(
+        GoogleAuthState.successful(authClient: client, projectId: projectId),
+      );
     } catch (e) {
       // TODO(Zverev): обработка ошибок
       print(e);
-      emit(BaseFormState.rejected('Что-то пошло не так'));
+      emit(GoogleAuthState.rejected('Что-то пошло не так'));
     }
   }
 
   @override
   void resetForm(BaseFormEvent event, Emitter<BaseFormState> emit) {
-    client?.close();
-    // TODO: actions in model state after replacement of appModel into bloc
-    appModel.authClient = null;
-    jsonTextController.text = '';
-    appModel.projectId = null;
-    appModel.notify();
-    super.resetForm(event, emit);
+    state.authClient?.close();
+    emit(GoogleAuthState.initial());
+  }
+
+  void onGoogleAuthJsonChange(
+    GoogleAuthJsonChange event,
+    Emitter<BaseFormState> emit,
+  ) async {
+    // TODO(Zverev): throttle
+    _jsonValue = event.value;
   }
 }

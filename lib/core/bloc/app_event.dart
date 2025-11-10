@@ -16,3 +16,10 @@ class AppDeviceTokenSelected extends AppEvent {
 
   const AppDeviceTokenSelected(this.deviceToken);
 }
+
+class AppAuthClientChanged extends AppEvent {
+  final String? projectId;
+  final AuthClient? authClient;
+
+  const AppAuthClientChanged({this.authClient, this.projectId});
+}
