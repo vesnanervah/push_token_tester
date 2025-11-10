@@ -1,7 +1,7 @@
 part of 'device_token_page.dart';
 
 class _DeviceTokenForm extends StatefulWidget {
-  const _DeviceTokenForm({super.key});
+  const _DeviceTokenForm();
 
   @override
   State<StatefulWidget> createState() => _DeviceTokenFormState();

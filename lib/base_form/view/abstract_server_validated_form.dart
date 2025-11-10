@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/base_form/view/abstract_form.dart';
-import 'package:push_by_token_tester/core/model/app_theme.dart';
+import 'package:push_by_token_tester/core/view/app_theme.dart';
 
 abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
     extends AbstractForm<B> {

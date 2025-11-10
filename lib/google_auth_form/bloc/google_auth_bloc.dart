@@ -11,7 +11,7 @@ class GoogleAuthBloc extends BaseFormBloc {
   final jsonTextController = TextEditingController();
   final GoogleAuthClientRepository repository;
 
-  GoogleAuthBloc(super.appModel, this.repository);
+  GoogleAuthBloc(this.repository);
   AuthClient? get client => appModel.authClient;
 
   @override

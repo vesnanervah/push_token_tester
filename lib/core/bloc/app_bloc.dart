@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
-import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_page.dart';
 import 'package:push_by_token_tester/google_auth_form/view/google_auth_page.dart';
 import 'package:push_by_token_tester/push_sender_form/view/push_sender_page.dart';
 
-class AppModel extends ChangeNotifier {
-  AuthClient? authClient;
-  String? projectId;
-  String? deviceToken;
-  NavItem selectedNavItem = NavItem.jsonPage;
+part 'app_state.dart';
+part 'app_event.dart';
+
+class AppBloc extends Bloc<AppEvent, AppState> {
   final pageViewController = PageController();
+  // TODO(Zverev): do not hold pages in bloc
   late final appRoutes = [
     AppRoute(
       navItem: NavItem.jsonPage,
@@ -22,50 +21,64 @@ class AppModel extends ChangeNotifier {
     ),
     AppRoute(
       navItem: NavItem.deviceTokenPage,
-      isAvailable: () => authClient != null,
+      isAvailable: () => state.authClient != null,
       body: const DeviceTokenPage(),
       faq:
           'Формируется через метод firebaseMessaging.getToken, обычно генерируется при запуске приложения в залогиненом стейте.',
     ),
     AppRoute(
       navItem: NavItem.pushContentPage,
-      isAvailable: () => authClient != null && deviceToken != null,
+      isAvailable: () => state.authClient != null && state.deviceToken != null,
       body: const PushSenderPage(),
     ),
   ];
 
-  AppRoute get currentRoute => appRoutes[selectedNavItem.index];
+  AppRoute get currentRoute => appRoutes[state.selectedNavItem.index];
 
-  void continueToNextStep() {
-    if (selectedNavItem.index == appRoutes.length - 1) return;
-    selectedNavItem = NavItem.values[selectedNavItem.index + 1];
-    animateToPage(selectedNavItem.index);
-    notify();
+  // TODO(Zverev): persistent state
+  AppBloc() : super(const AppState()) {
+    on<AppNavigationChange>(onAppNavigationChange);
   }
 
-  void notify() => notifyListeners();
-
-  void animateToPage(int index) {
+  void onAppNavigationChange(
+    AppNavigationChange event,
+    Emitter<AppState> emit,
+  ) {
+    if (event.item == state.selectedNavItem) return;
+    if (!appRoutes[event.item.index].isAvailable()) return;
+    // TODO(Zverev): there is already emission of NavItem which occures in state emission.
+    // Listen NavItem changes of the state in View and make animation call there.
     pageViewController.animateToPage(
-      index,
+      event.item.index,
       duration: const Duration(milliseconds: 200),
       curve: Curves.bounceIn,
     );
+    emit(state.copyWith());
   }
 }
+
+// TODO(Zverev): separate inner navigation logic and bloc
 
 class AppRoute {
   final NavItem navItem;
   final bool Function() isAvailable;
   final Widget body;
   final String? faq;
-  FormStatus status;
 
   AppRoute({
     required this.navItem,
     required this.isAvailable,
     required this.body,
     this.faq,
-    this.status = FormStatus.initial,
   });
+}
+
+enum NavItem {
+  jsonPage('Вставьте содержимое json от сервисного аккаунта FirebaseMessaging'),
+  deviceTokenPage('Вставьте device token'),
+  pushContentPage('Заполните содержимое пуша');
+
+  final String title;
+
+  const NavItem(this.title);
 }

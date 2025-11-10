@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
-import 'package:push_by_token_tester/core/model/app_model.dart';
-import 'package:push_by_token_tester/core/model/app_theme.dart';
+import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
+import 'package:push_by_token_tester/core/view/app_theme.dart';
 
 abstract class AbstractForm<B extends BaseFormBloc>
     extends State<StatefulWidget> {
@@ -10,7 +10,7 @@ abstract class AbstractForm<B extends BaseFormBloc>
 
   final formKey = GlobalKey<FormState>();
 
-  late final AppModel appModel = context.read<AppModel>();
+  late final AppBloc appModel = context.read<AppBloc>();
 
   late final AppRoute currentRoute = appModel.currentRoute;
 
@@ -25,10 +25,7 @@ abstract class AbstractForm<B extends BaseFormBloc>
           const Spacer(flex: 4),
           wrapFieldsWithConstraints(context),
           const Spacer(flex: 2),
-          BlocConsumer<B, BaseFormState>(
-            listener: (context, state) {
-              currentRoute.status = state.status;
-            },
+          BlocBuilder<B, BaseFormState>(
             builder: (context, state) => buildStatusBlock(context),
           ),
         ],

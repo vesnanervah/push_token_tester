@@ -7,7 +7,7 @@ class DeviceTokenBloc extends BaseFormBloc {
     text: appModel.deviceToken,
   );
 
-  DeviceTokenBloc(super.appModel);
+  DeviceTokenBloc();
 
   @override
   Future<void> close() {
