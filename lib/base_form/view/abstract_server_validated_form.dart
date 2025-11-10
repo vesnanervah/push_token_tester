@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/base_form/view/abstract_form.dart';
+import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
 
 abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
@@ -69,9 +71,8 @@ abstract class AbstractServerValidatedForm<B extends BaseFormBloc>
           buildResetButton(),
           const SizedBox(width: 20),
           ElevatedButton(
-            onPressed: () {
-              appModel.continueToNextStep();
-            },
+            onPressed: () =>
+                context.read<AppBloc>().add(const AppNavigationChange()),
             child: const Text('Продолжить', style: AppText.btnText),
           ),
         ],

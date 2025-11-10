@@ -5,7 +5,8 @@ sealed class AppEvent {
 }
 
 class AppNavigationChange extends AppEvent {
-  final NavItem item;
+  final NavItem? item;
 
-  const AppNavigationChange(this.item);
+  /// If [item] is not specified, then navigator will try to select next page
+  const AppNavigationChange({this.item});
 }

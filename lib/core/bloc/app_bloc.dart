@@ -45,11 +45,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     if (event.item == state.selectedNavItem) return;
-    if (!appRoutes[event.item.index].isAvailable()) return;
+    final index = event.item?.index ?? currentRoute.navItem.index + 1;
+    if (index > NavItem.values.length - 1) return;
+    if (!appRoutes[index].isAvailable()) return;
     // TODO(Zverev): there is already emission of NavItem which occures in state emission.
     // Listen NavItem changes of the state in View and make animation call there.
     pageViewController.animateToPage(
-      event.item.index,
+      index,
       duration: const Duration(milliseconds: 200),
       curve: Curves.bounceIn,
     );

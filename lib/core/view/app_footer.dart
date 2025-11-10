@@ -23,7 +23,7 @@ class AppFooter extends StatelessWidget {
   Widget buildPageIndicator(BuildContext context, int index) {
     return GestureDetector(
       onTap: () => context.read<AppBloc>().add(
-        AppNavigationChange(NavItem.values[index]),
+        AppNavigationChange(item: NavItem.values[index]),
       ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
