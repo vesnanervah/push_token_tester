@@ -57,6 +57,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
     emit(state.copyWith());
   }
+
+  void onAppDeviceTokenSelected(
+    AppDeviceTokenSelected event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(deviceToken: event.deviceToken));
+  }
 }
 
 // TODO(Zverev): separate inner navigation logic and bloc

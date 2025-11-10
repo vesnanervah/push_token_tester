@@ -8,13 +8,21 @@ class _DeviceTokenForm extends StatefulWidget {
 }
 
 class _DeviceTokenFormState extends AbstractForm<DeviceTokenBloc> {
+  late final TextEditingController deviceTokenFieldController =
+      TextEditingController(text: appModel.state.deviceToken);
+
   @override
   get submitButtonText => 'Продолжить';
 
   @override
+  void dispose() {
+    deviceTokenFieldController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget buildFields(BuildContext context) => TextFormField(
-    // TODO(Zverev): hold value in state
-    controller: formBloc.deviceTokenFieldController,
+    controller: deviceTokenFieldController,
     decoration: const InputDecoration(hintText: 'Девайс токен...'),
     minLines: 12,
     maxLines: 14,
@@ -38,4 +46,12 @@ class _DeviceTokenFormState extends AbstractForm<DeviceTokenBloc> {
       buildSubmitButton(),
     ],
   );
+
+  @override
+  void trySubmit() {
+    if (!validate()) return;
+    appModel.add(
+      AppDeviceTokenSelected(deviceTokenFieldController.text.trim()),
+    );
+  }
 }

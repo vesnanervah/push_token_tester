@@ -10,3 +10,9 @@ class AppNavigationChange extends AppEvent {
   /// If [item] is not specified, then navigator will try to select next page
   const AppNavigationChange({this.item});
 }
+
+class AppDeviceTokenSelected extends AppEvent {
+  final String? deviceToken;
+
+  const AppDeviceTokenSelected(this.deviceToken);
+}

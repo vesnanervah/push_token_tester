@@ -61,8 +61,10 @@ abstract class AbstractForm<B extends BaseFormBloc>
     if (!context.mounted) {
       return;
     }
-    if (formKey.currentState?.validate() ?? false) {
+    if (validate()) {
       formBloc.add(SubmitForm());
     }
   }
+
+  bool validate() => formKey.currentState?.validate() ?? false;
 }
