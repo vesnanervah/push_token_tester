@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:push_by_token_tester/core/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
 
 class PushSenderBloc extends BaseFormBloc {

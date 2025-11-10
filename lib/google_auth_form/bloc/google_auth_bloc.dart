@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:push_by_token_tester/core/base_form/bloc/bloc.dart';
+import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
 import 'package:push_by_token_tester/google_auth_form/repository/google_auth_client_repository.dart';
 
 class GoogleAuthBloc extends BaseFormBloc {

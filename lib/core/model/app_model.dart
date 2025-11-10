@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:push_by_token_tester/core/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/core/model/entities/nav_item.dart';
 import 'package:push_by_token_tester/device_token_form/view/device_token_page.dart';
 import 'package:push_by_token_tester/google_auth_form/view/google_auth_page.dart';
