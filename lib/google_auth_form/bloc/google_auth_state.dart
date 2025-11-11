@@ -33,4 +33,7 @@ class GoogleAuthState extends BaseFormState {
     status: FormStatus.rejected,
     error: error,
   );
+
+  @override
+  List<Object?> get props => [authClient, projectId, ...super.props];
 }

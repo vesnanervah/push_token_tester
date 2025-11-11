@@ -1,6 +1,5 @@
 part of 'base_form_bloc.dart';
 
-// TODO(Zverev): class naming (since int's not abstract maybe delete "Base")
 @immutable
 class BaseFormState extends Equatable {
   final FormStatus status;
