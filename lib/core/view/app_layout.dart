@@ -15,8 +15,14 @@ class AppLayout extends StatefulWidget {
 }
 
 class _AppLayoutState extends State<AppLayout> {
-  late final pageController = context.read<AppBloc>().pageViewController;
+  final pageController = PageController();
   late final appRoutes = context.read<AppBloc>().appRoutes;
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => BlocConsumer<AppBloc, AppState>(
@@ -37,8 +43,16 @@ class _AppLayoutState extends State<AppLayout> {
         const AppFooter(),
       ],
     ),
-    listener: _onStateChange,
+    listener: onStateChange,
   );
-}
 
-void _onStateChange(BuildContext context, AppState state) {}
+  void onStateChange(BuildContext context, AppState state) {
+    if ((pageController.page?.toInt() ?? 0) != state.selectedNavItem.index) {
+      pageController.animateToPage(
+        state.selectedNavItem.index,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.bounceIn,
+      );
+    }
+  }
+}

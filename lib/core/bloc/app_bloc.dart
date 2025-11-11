@@ -9,7 +9,6 @@ part 'app_state.dart';
 part 'app_event.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  final pageViewController = PageController();
   // TODO(Zverev): do not hold pages in bloc
   late final appRoutes = [
     AppRoute(
@@ -38,6 +37,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   // TODO(Zverev): persistent state
   AppBloc() : super(const AppState()) {
     on<AppNavigationChange>(onAppNavigationChange);
+    on<AppAuthClientChanged>(onAppAuthClientChanged);
   }
 
   void onAppNavigationChange(
@@ -48,14 +48,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final index = event.item?.index ?? currentRoute.navItem.index + 1;
     if (index > NavItem.values.length - 1) return;
     if (!appRoutes[index].isAvailable()) return;
-    // TODO(Zverev): there is already emission of NavItem which occures in state emission.
-    // Listen NavItem changes of the state in View and make animation call there.
-    pageViewController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.bounceIn,
-    );
-    emit(state.copyWith());
+    emit(state.copyWith(selectedNavItem: NavItem.values[index]));
   }
 
   void onAppDeviceTokenSelected(
@@ -63,6 +56,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     emit(state.copyWith(deviceToken: event.deviceToken));
+  }
+
+  void onAppAuthClientChanged(
+    AppAuthClientChanged event,
+    Emitter<AppState> emit,
+  ) {
+    emit(
+      state.copyWith(authClient: event.authClient, projectId: event.projectId),
+    );
   }
 }
 

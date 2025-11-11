@@ -6,7 +6,7 @@ class AppFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 60,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListView.separated(
@@ -27,8 +27,8 @@ class AppFooter extends StatelessWidget {
       ),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        height: 40,
-        width: 40,
+        height: 30,
+        width: 30,
         decoration: BoxDecoration(
           // TODO(Zverev): contain accessibility of routes in state
           color: context.read<AppBloc>().appRoutes[index].isAvailable()
