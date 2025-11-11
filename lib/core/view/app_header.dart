@@ -1,21 +1,19 @@
 part of 'app_layout.dart';
 
 class AppHeader extends StatelessWidget {
-  final bool shouldDisplayHelpBtn;
+  final NavItem selectedNavItem;
 
-  const AppHeader({this.shouldDisplayHelpBtn = true, super.key});
+  const AppHeader(this.selectedNavItem, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final currentRoute = context.watch<AppBloc>().currentRoute;
-
     return Container(
       height: 80,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Stack(
         children: [
-          if (currentRoute.faq != null)
+          if (selectedNavItem.faq != null)
             Align(
               alignment: Alignment.centerLeft,
               child: ElevatedButton(
@@ -30,7 +28,7 @@ class AppHeader extends StatelessWidget {
                         horizontal: 20,
                       ),
                       child: Text(
-                        currentRoute.faq!,
+                        selectedNavItem.faq!,
                         style: AppText.header.copyWith(color: AppColors.blackL),
                       ),
                     ),
@@ -44,7 +42,7 @@ class AppHeader extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: AutoSizeText(
-                currentRoute.navItem.title,
+                selectedNavItem.title,
                 style: AppText.header,
                 maxLines: 1,
               ),

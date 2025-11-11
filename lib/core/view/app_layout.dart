@@ -2,7 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
+import 'package:push_by_token_tester/core/nav/nav_item.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
+import 'package:push_by_token_tester/device_token_form/view/device_token_page.dart';
+import 'package:push_by_token_tester/google_auth_form/view/view.dart';
+import 'package:push_by_token_tester/push_sender_form/view/push_sender_page.dart';
 
 part 'app_footer.dart';
 part 'app_header.dart';
@@ -16,7 +20,6 @@ class AppLayout extends StatefulWidget {
 
 class _AppLayoutState extends State<AppLayout> {
   final pageController = PageController();
-  late final appRoutes = context.read<AppBloc>().appRoutes;
 
   @override
   void dispose() {
@@ -29,14 +32,14 @@ class _AppLayoutState extends State<AppLayout> {
     builder: (context, state) => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const AppHeader(),
+        AppHeader(state.selectedNavItem),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(30),
             child: PageView.builder(
               controller: pageController,
-              itemCount: appRoutes.length,
-              itemBuilder: (context, index) => appRoutes[index].body,
+              itemCount: NavItem.values.length,
+              itemBuilder: (context, index) => getPageFromNavItem(index),
             ),
           ),
         ),
@@ -45,6 +48,12 @@ class _AppLayoutState extends State<AppLayout> {
     ),
     listener: onStateChange,
   );
+
+  Widget getPageFromNavItem(int index) => switch (NavItem.values[index]) {
+    NavItem.jsonPage => const GoogleAuthPage(),
+    NavItem.deviceTokenPage => const DeviceTokenPage(),
+    NavItem.pushContentPage => const PushSenderPage(),
+  };
 
   void onStateChange(BuildContext context, AppState state) {
     if ((pageController.page?.toInt() ?? 0) != state.selectedNavItem.index) {

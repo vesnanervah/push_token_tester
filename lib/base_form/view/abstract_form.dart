@@ -12,8 +12,6 @@ abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
 
   late final AppBloc appBloc = context.read<AppBloc>();
 
-  late final AppRoute currentRoute = appBloc.currentRoute;
-
   B get formBloc => context.read<B>();
 
   @override

@@ -8,8 +8,8 @@ import 'package:push_by_token_tester/google_auth_form/repository/google_auth_cli
 
 part 'gooogle_auth_form.dart';
 
-class GoogleAuthFormPage extends StatelessWidget {
-  const GoogleAuthFormPage({super.key});
+class GoogleAuthPage extends StatelessWidget {
+  const GoogleAuthPage({super.key});
 
   @override
   Widget build(BuildContext context) => BlocProvider<GoogleAuthBloc>(

@@ -10,7 +10,7 @@ class AppFooter extends StatelessWidget {
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListView.separated(
-          itemCount: context.read<AppBloc>().appRoutes.length,
+          itemCount: NavItem.values.length,
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           separatorBuilder: (context, index) => const SizedBox(width: 25),
@@ -31,7 +31,7 @@ class AppFooter extends StatelessWidget {
         width: 30,
         decoration: BoxDecoration(
           // TODO(Zverev): contain accessibility of routes in state
-          color: context.read<AppBloc>().appRoutes[index].isAvailable()
+          color: context.read<AppBloc>().getRouteAvailability(index)
               ? AppColors.pinkXxl
               : AppColors.purple,
           shape: BoxShape.circle,
