@@ -19,7 +19,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.item == state.selectedNavItem) return;
     final index = event.item?.index ?? state.selectedNavItem.index + 1;
     if (index > NavItem.values.length - 1) return;
-    if (!getRouteAvailability(index)) return;
+    if (!state.getRouteAvailability(index)) return;
     emit(state.copyWith(selectedNavItem: NavItem.values[index]));
   }
 
@@ -38,11 +38,4 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       state.copyWith(authClient: event.authClient, projectId: event.projectId),
     );
   }
-
-  bool getRouteAvailability(int index) => switch (NavItem.values[index]) {
-    NavItem.jsonPage => true,
-    NavItem.deviceTokenPage => state.authClient != null,
-    NavItem.pushContentPage =>
-      state.authClient != null && state.deviceToken != null,
-  };
 }

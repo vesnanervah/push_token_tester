@@ -24,4 +24,10 @@ class AppState {
     authClient: authClient ?? this.authClient,
     selectedNavItem: selectedNavItem ?? this.selectedNavItem,
   );
+
+  bool getRouteAvailability(int index) => switch (NavItem.values[index]) {
+    NavItem.jsonPage => true,
+    NavItem.deviceTokenPage => authClient != null,
+    NavItem.pushContentPage => authClient != null && deviceToken != null,
+  };
 }

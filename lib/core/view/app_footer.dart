@@ -21,17 +21,17 @@ class AppFooter extends StatelessWidget {
   }
 
   Widget buildPageIndicator(BuildContext context, int index) {
+    final appBloc = context.read<AppBloc>();
+
     return GestureDetector(
-      onTap: () => context.read<AppBloc>().add(
-        AppNavigationChange(item: NavItem.values[index]),
-      ),
+      onTap: () =>
+          appBloc.add(AppNavigationChange(item: NavItem.values[index])),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 30,
         width: 30,
         decoration: BoxDecoration(
-          // TODO(Zverev): contain accessibility of routes in state
-          color: context.read<AppBloc>().getRouteAvailability(index)
+          color: appBloc.state.getRouteAvailability(index)
               ? AppColors.pinkXxl
               : AppColors.purple,
           shape: BoxShape.circle,
