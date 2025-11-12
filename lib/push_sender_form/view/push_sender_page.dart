@@ -36,6 +36,7 @@ class _PushSenderPageState extends State<PushSenderPage>
           PushRepository(),
           authClient: appBlocState.authClient!,
           projectId: appBlocState.projectId!,
+          deviceToken: appBlocState.deviceToken!,
         );
       },
       child: _PushSenderForm(),

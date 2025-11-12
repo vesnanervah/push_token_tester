@@ -9,7 +9,7 @@ class AppFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 50,
       decoration: const BoxDecoration(color: AppColors.blackXl),
       child: Center(
         child: ListView.separated(

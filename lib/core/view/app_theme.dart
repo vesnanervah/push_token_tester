@@ -54,7 +54,7 @@ abstract final class AppTheme {
     scaffoldBackgroundColor: AppColors.blackXxl,
     elevatedButtonTheme: const ElevatedButtonThemeData(
       style: ButtonStyle(
-        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 24)),
+        padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
         fixedSize: WidgetStatePropertyAll(Size.fromHeight(48)),
         elevation: WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(AppColors.pinkXxl),

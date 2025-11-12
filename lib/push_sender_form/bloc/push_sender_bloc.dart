@@ -13,11 +13,13 @@ class PushSenderBloc extends BaseFormBloc {
   final bodyController = TextEditingController();
   final AuthClient authClient;
   final String projectId;
+  final String deviceToken;
 
   PushSenderBloc(
     this.repository, {
     required this.authClient,
     required this.projectId,
+    required this.deviceToken,
   }) : super(BaseFormState.initial());
 
   @override
@@ -53,6 +55,7 @@ class PushSenderBloc extends BaseFormBloc {
         text: textPushController.text.trim(),
         body: body,
         projectId: projectId,
+        deviceToken: deviceToken,
       );
       if (response.statusCode >= 400) {
         emit(BaseFormState.rejected('Ошибка на сервере'));
