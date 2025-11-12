@@ -29,7 +29,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     AppDeviceTokenSelected event,
     Emitter<AppState> emit,
   ) {
-    emit(state.copyWith(deviceToken: event.deviceToken));
+    emit(
+      event.deviceToken == null
+          ? state.copyWithoutDeviceToken()
+          : state.copyWith(deviceToken: event.deviceToken),
+    );
   }
 
   void onAppAuthClientChanged(
@@ -37,7 +41,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) {
     emit(
-      state.copyWith(authClient: event.authClient, projectId: event.projectId),
+      event.authClient == null || event.projectId == null
+          ? const AppState()
+          : state.copyWith(
+              authClient: event.authClient,
+              projectId: event.projectId,
+            ),
     );
   }
 }

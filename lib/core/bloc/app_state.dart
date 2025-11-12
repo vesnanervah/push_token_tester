@@ -25,6 +25,16 @@ class AppState extends Equatable {
     selectedNavItem: selectedNavItem ?? this.selectedNavItem,
   );
 
+  AppState copyWithoutDeviceToken({
+    String? projectId,
+    AuthClient? authClient,
+    NavItem? selectedNavItem,
+  }) => AppState(
+    projectId: projectId ?? this.projectId,
+    authClient: authClient ?? this.authClient,
+    selectedNavItem: selectedNavItem ?? this.selectedNavItem,
+  );
+
   bool getRouteAvailability(int index) => switch (NavItem.values[index]) {
     NavItem.jsonPage => true,
     NavItem.deviceTokenPage => hasAuthData,
