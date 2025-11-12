@@ -43,7 +43,12 @@ class _AppLayoutState extends State<AppLayout> {
             ),
           ),
         ),
-        const AppFooter(),
+        AppFooter(
+          state,
+          onNavItemTap: (index) => context.read<AppBloc>().add(
+            AppNavigationChange(item: NavItem.values[index]),
+          ),
+        ),
       ],
     ),
     listener: onStateChange,

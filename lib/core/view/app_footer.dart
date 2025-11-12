@@ -1,7 +1,10 @@
 part of 'app_layout.dart';
 
 class AppFooter extends StatelessWidget {
-  const AppFooter({super.key});
+  final AppState state;
+  final void Function(int index) onNavItemTap;
+
+  const AppFooter(this.state, {required this.onNavItemTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +24,22 @@ class AppFooter extends StatelessWidget {
   }
 
   Widget buildPageIndicator(BuildContext context, int index) {
-    final appBloc = context.read<AppBloc>();
-    final isSelected = index == appBloc.state.selectedNavItem.index;
     return GestureDetector(
-      onTap: () =>
-          appBloc.add(AppNavigationChange(item: NavItem.values[index])),
+      onTap: () => onNavItemTap(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         height: 30,
         width: 30,
         decoration: BoxDecoration(
-          color: appBloc.state.getRouteAvailability(index)
+          color: state.getRouteAvailability(index)
               ? AppColors.pinkXxl
               : AppColors.purple,
           shape: BoxShape.circle,
           border: Border.fromBorderSide(
             BorderSide(
-              color: isSelected ? AppColors.pinkL : Colors.transparent,
+              color: index == state.selectedNavItem.index
+                  ? AppColors.pinkL
+                  : Colors.transparent,
               width: 2,
             ),
           ),
