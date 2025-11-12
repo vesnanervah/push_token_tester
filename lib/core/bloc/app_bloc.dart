@@ -11,6 +11,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppState()) {
     on<AppNavigationChange>(onAppNavigationChange);
     on<AppAuthClientChanged>(onAppAuthClientChanged);
+    on<AppDeviceTokenSelected>(onAppDeviceTokenSelected);
   }
 
   void onAppNavigationChange(
