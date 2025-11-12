@@ -27,9 +27,12 @@ class AppState extends Equatable {
 
   bool getRouteAvailability(int index) => switch (NavItem.values[index]) {
     NavItem.jsonPage => true,
-    NavItem.deviceTokenPage => authClient != null,
-    NavItem.pushContentPage => authClient != null && deviceToken != null,
+    NavItem.deviceTokenPage => hasAuthData,
+    NavItem.pushContentPage => authClient != null && hasDeviceData,
   };
+
+  bool get hasAuthData => authClient != null && projectId != null;
+  bool get hasDeviceData => deviceToken != null;
 
   @override
   List<Object?> get props => [

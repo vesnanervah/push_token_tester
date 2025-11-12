@@ -11,20 +11,34 @@ import 'package:push_by_token_tester/push_sender_form/repository/repository.dart
 
 part 'push_sender_form.dart';
 
-class PushSenderPage extends StatelessWidget {
+class PushSenderPage extends StatefulWidget {
   const PushSenderPage({super.key});
 
   @override
-  // TODO(Zverev): maybe hold all repositories in same place
-  Widget build(BuildContext context) => BlocProvider(
-    create: (context) {
-      final appBlocState = context.read<AppBloc>().state;
-      return PushSenderBloc(
-        PushRepository(),
-        authClient: appBlocState.authClient!,
-        projectId: appBlocState.projectId!,
-      );
-    },
-    child: _PushSenderForm(),
-  );
+  State<PushSenderPage> createState() => _PushSenderPageState();
+}
+
+class _PushSenderPageState extends State<PushSenderPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive {
+    final state = context.read<AppBloc>().state;
+    return state.hasAuthData && state.hasDeviceData;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return BlocProvider(
+      create: (context) {
+        final appBlocState = context.read<AppBloc>().state;
+        return PushSenderBloc(
+          PushRepository(),
+          authClient: appBlocState.authClient!,
+          projectId: appBlocState.projectId!,
+        );
+      },
+      child: _PushSenderForm(),
+    );
+  }
 }

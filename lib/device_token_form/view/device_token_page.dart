@@ -8,12 +8,24 @@ import 'package:push_by_token_tester/device_token_form/bloc/device_token_bloc.da
 
 part 'device_token_form.dart';
 
-class DeviceTokenPage extends StatelessWidget {
+class DeviceTokenPage extends StatefulWidget {
   const DeviceTokenPage({super.key});
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-    create: (context) => DeviceTokenBloc(),
-    child: const _DeviceTokenForm(),
-  );
+  State<DeviceTokenPage> createState() => _DeviceTokenPageState();
+}
+
+class _DeviceTokenPageState extends State<DeviceTokenPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => context.read<AppBloc>().state.hasAuthData;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return BlocProvider(
+      create: (context) => DeviceTokenBloc(),
+      child: const _DeviceTokenForm(),
+    );
+  }
 }
