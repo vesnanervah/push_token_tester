@@ -23,11 +23,11 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
     emit(GoogleAuthState.loading());
     try {
       final jsonData = jsonDecode(_jsonValue.trim());
-      final client = await repository.retrieveAuthClient(jsonData);
       final projectId = jsonData['project_id'];
       if (projectId is! String) {
         return emit(GoogleAuthState.rejected('Не найден project_id'));
       }
+      final client = await repository.retrieveAuthClient(jsonData);
       emit(
         GoogleAuthState.successful(authClient: client, projectId: projectId),
       );
