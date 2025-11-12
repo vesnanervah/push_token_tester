@@ -22,7 +22,7 @@ class AppFooter extends StatelessWidget {
 
   Widget buildPageIndicator(BuildContext context, int index) {
     final appBloc = context.read<AppBloc>();
-
+    final isSelected = index == appBloc.state.selectedNavItem.index;
     return GestureDetector(
       onTap: () =>
           appBloc.add(AppNavigationChange(item: NavItem.values[index])),
@@ -35,6 +35,12 @@ class AppFooter extends StatelessWidget {
               ? AppColors.pinkXxl
               : AppColors.purple,
           shape: BoxShape.circle,
+          border: Border.fromBorderSide(
+            BorderSide(
+              color: isSelected ? AppColors.pinkL : Colors.transparent,
+              width: 2,
+            ),
+          ),
         ),
       ),
     );
