@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/core/nav/nav_item.dart';

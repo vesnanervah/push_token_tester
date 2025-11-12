@@ -1,6 +1,5 @@
 part of 'google_auth_bloc.dart';
 
-@immutable
 class GoogleAuthState extends BaseFormState {
   final AuthClient? authClient;
   final String? projectId;

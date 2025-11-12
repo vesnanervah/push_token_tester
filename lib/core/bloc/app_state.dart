@@ -1,6 +1,6 @@
 part of 'app_bloc.dart';
 
-class AppState {
+class AppState extends Equatable {
   final String? projectId;
   final String? deviceToken;
   final AuthClient? authClient;
@@ -30,4 +30,12 @@ class AppState {
     NavItem.deviceTokenPage => authClient != null,
     NavItem.pushContentPage => authClient != null && deviceToken != null,
   };
+
+  @override
+  List<Object?> get props => [
+    projectId,
+    authClient,
+    deviceToken,
+    selectedNavItem,
+  ];
 }
