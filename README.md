@@ -1,16 +1,11 @@
 # push_by_token_tester
 
-A new Flutter project.
+An application that allows you to send a firebase push message on a device by its token.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1) Retreive service credentials of your Firebase project.
+2) Get the device token.
+3) Complete any data you want to send.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+_TADA! If your device supports FCM, you got service credentials of an app that really exist in firebase and installed on the device and device token really belongs to the device, push should come to you just ok_
