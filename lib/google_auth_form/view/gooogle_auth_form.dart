@@ -64,6 +64,10 @@ class _GoogleAuthFormState
 
   @override
   void onFormStateUpdate(BuildContext context, GoogleAuthState state) {
+    if (state.status.isInitial) {
+      // Reset value after form reset
+      jsonTextController.text = '';
+    }
     appBloc.add(
       AppAuthClientChanged(
         authClient: state.authClient,
