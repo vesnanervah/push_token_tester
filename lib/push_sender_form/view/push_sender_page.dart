@@ -18,17 +18,9 @@ class PushSenderPage extends StatefulWidget {
   State<PushSenderPage> createState() => _PushSenderPageState();
 }
 
-class _PushSenderPageState extends State<PushSenderPage>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive {
-    final state = context.read<AppBloc>().state;
-    return state.hasAuthData && state.hasDeviceData;
-  }
-
+class _PushSenderPageState extends State<PushSenderPage> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return BlocProvider(
       create: (context) {
         final appBlocState = context.read<AppBloc>().state;
