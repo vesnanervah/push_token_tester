@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 
 part 'device_token_state.dart';
@@ -18,6 +19,7 @@ class DeviceTokenBloc extends BaseFormBloc<DeviceTokenState> {
     emit(DeviceTokenState.successful(state.token!));
   }
 
+  @protected
   void onDeviceTokenInputChanged(
     DeviceTokenInputChanged event,
     Emitter<DeviceTokenState> emit,

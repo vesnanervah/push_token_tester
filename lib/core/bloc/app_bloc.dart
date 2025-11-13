@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/core/nav/nav_item.dart';
@@ -14,6 +15,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppDeviceTokenSelected>(onAppDeviceTokenSelected);
   }
 
+  @protected
   void onAppNavigationChange(
     AppNavigationChange event,
     Emitter<AppState> emit,
@@ -25,6 +27,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(selectedNavItem: NavItem.values[index]));
   }
 
+  @protected
   void onAppDeviceTokenSelected(
     AppDeviceTokenSelected event,
     Emitter<AppState> emit,
@@ -36,6 +39,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  @protected
   void onAppAuthClientChanged(
     AppAuthClientChanged event,
     Emitter<AppState> emit,
