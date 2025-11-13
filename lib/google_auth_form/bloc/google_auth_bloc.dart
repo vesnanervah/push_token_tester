@@ -33,9 +33,11 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
         GoogleAuthState.successful(authClient: client, projectId: projectId),
       );
     } catch (e) {
-      // TODO(Zverev): обработка ошибок
-      print(e);
-      emit(GoogleAuthState.rejected('Что-то пошло не так'));
+      if (e is FormatException) {
+        emit(GoogleAuthState.rejected('объект не в JSON формате'));
+      } else {
+        emit(GoogleAuthState.rejected('что-то пошло не так'));
+      }
     }
   }
 
