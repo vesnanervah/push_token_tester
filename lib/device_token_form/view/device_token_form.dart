@@ -8,25 +8,16 @@ class _DeviceTokenForm extends StatefulWidget {
 }
 
 class _DeviceTokenFormState
-    extends AbstractForm<BaseFormState, DeviceTokenBloc> {
-  late final TextEditingController deviceTokenFieldController =
-      TextEditingController(text: appBloc.state.deviceToken);
-
+    extends AbstractForm<DeviceTokenState, DeviceTokenBloc> {
   @override
-  get submitButtonText => 'Продолжить';
-
-  @override
-  void dispose() {
-    deviceTokenFieldController.dispose();
-    super.dispose();
-  }
+  get submitButtonText => 'Сохранить';
 
   @override
   Widget buildFields(BuildContext context) => TextFormField(
-    controller: deviceTokenFieldController,
     decoration: const InputDecoration(hintText: 'Девайс токен...'),
     minLines: 12,
     maxLines: 14,
+    onChanged: (val) => formBloc.add(DeviceTokenInputChanged(val)),
     validator: (value) =>
         (value?.isEmpty ?? true) ? 'Не должно быть пустым' : null,
   );
@@ -44,16 +35,26 @@ class _DeviceTokenFormState
         ),
       ),
       const SizedBox(height: 20),
-      buildSubmitButton(),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 20,
+        children: [
+          buildSubmitButton(),
+          if (formBloc.state.status.isSuccessful) buildContinueButton(),
+        ],
+      ),
     ],
   );
 
+  Widget buildContinueButton() => ElevatedButton(
+    onPressed: () => appBloc.add(const AppNavigationChange()),
+    child: const Text('Продолжить', style: AppText.btnText),
+  );
+
   @override
-  onFormStateUpdate(BuildContext context, BaseFormState state) {
+  onFormStateUpdate(BuildContext context, DeviceTokenState state) {
     if (state.status.isSuccessful) {
-      appBloc.add(
-        AppDeviceTokenSelected(deviceTokenFieldController.text.trim()),
-      );
+      appBloc.add(AppDeviceTokenSelected(state.token!.trim()));
     }
   }
 }

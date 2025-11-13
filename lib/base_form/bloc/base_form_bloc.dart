@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
 part 'base_form_event.dart';
 part 'base_form_state.dart';
@@ -11,7 +12,9 @@ abstract class BaseFormBloc<S extends BaseFormState>
     on<ResetForm>(resetForm);
   }
 
+  @protected
   Future<void> submitForm(BaseFormEvent event, Emitter<S> emit);
 
+  @protected
   void resetForm(BaseFormEvent event, Emitter<S> emit) {}
 }
