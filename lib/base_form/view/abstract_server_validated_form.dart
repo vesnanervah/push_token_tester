@@ -52,12 +52,7 @@ abstract class AbstractServerValidatedForm<
         children: [
           buildResetButton(),
           const SizedBox(width: 20),
-          ElevatedButton(
-            onPressed: () {
-              formBloc.add(const ResetForm());
-            },
-            child: const Text('Повторить', style: AppText.btnText),
-          ),
+          buildSubmitButton(),
         ],
       ),
     ],

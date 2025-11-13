@@ -46,7 +46,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) {
     emit(
       event.authClient == null || event.projectId == null
-          ? const AppState()
+          ? AppState(deviceToken: state.deviceToken)
           : state.copyWith(
               authClient: event.authClient,
               projectId: event.projectId,
