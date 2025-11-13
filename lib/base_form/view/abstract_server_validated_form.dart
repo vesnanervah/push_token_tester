@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/base_form/view/abstract_form.dart';
-import 'package:push_by_token_tester/core/bloc/app_bloc.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
 
 abstract class AbstractServerValidatedForm<
@@ -11,12 +9,12 @@ abstract class AbstractServerValidatedForm<
 >
     extends AbstractForm<S, B> {
   @override
-  Widget buildStatusBlock(BuildContext context) =>
-      switch (formBloc.state.status) {
+  Widget buildStatusBlock(BuildContext context, S state) =>
+      switch (state.status) {
         FormStatus.initial => buildNotSendedStatusBlock(),
         FormStatus.loading => buildLoadingStatusBlock(),
         FormStatus.successful => buildSuccessfulStatusBlock(),
-        FormStatus.rejected => buildRejectedStatusBlock(),
+        FormStatus.rejected => buildRejectedStatusBlock(state),
       };
 
   @protected
@@ -32,7 +30,7 @@ abstract class AbstractServerValidatedForm<
   );
 
   @protected
-  Widget buildRejectedStatusBlock() => Column(
+  Widget buildRejectedStatusBlock(S state) => Column(
     children: [
       Text.rich(
         TextSpan(
@@ -40,7 +38,7 @@ abstract class AbstractServerValidatedForm<
           children: [
             const TextSpan(text: 'Ошибка: '),
             TextSpan(
-              text: formBloc.state.error ?? 'Что-то пошло не так',
+              text: state.error ?? 'Что-то пошло не так',
               style: AppText.statusAccentText,
             ),
           ],
@@ -68,11 +66,7 @@ abstract class AbstractServerValidatedForm<
         children: [
           buildResetButton(),
           const SizedBox(width: 20),
-          ElevatedButton(
-            onPressed: () =>
-                context.read<AppBloc>().add(const AppNavigationChange()),
-            child: const Text('Продолжить', style: AppText.btnText),
-          ),
+          buildContinueButton(),
         ],
       ),
     ],

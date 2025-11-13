@@ -23,33 +23,29 @@ class _DeviceTokenFormState
   );
 
   @override
-  Widget buildStatusBlock(BuildContext context) => Column(
-    children: [
-      const Text.rich(
-        TextSpan(
-          style: AppText.statusCommonText,
-          children: [
-            TextSpan(text: 'Внимательно проверьте токен. Его валидация '),
-            TextSpan(text: 'отсутствует', style: AppText.statusAccentText),
-          ],
-        ),
-      ),
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 20,
+  Widget buildStatusBlock(BuildContext context, DeviceTokenState state) =>
+      Column(
         children: [
-          buildSubmitButton(),
-          if (formBloc.state.status.isSuccessful) buildContinueButton(),
+          const Text.rich(
+            TextSpan(
+              style: AppText.statusCommonText,
+              children: [
+                TextSpan(text: 'Внимательно проверьте токен. Его валидация '),
+                TextSpan(text: 'отсутствует', style: AppText.statusAccentText),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 20,
+            children: [
+              buildSubmitButton(),
+              if (state.status.isSuccessful) buildContinueButton(),
+            ],
+          ),
         ],
-      ),
-    ],
-  );
-
-  Widget buildContinueButton() => ElevatedButton(
-    onPressed: () => appBloc.add(const AppNavigationChange()),
-    child: const Text('Продолжить', style: AppText.btnText),
-  );
+      );
 
   @override
   onFormStateUpdate(BuildContext context, DeviceTokenState state) {

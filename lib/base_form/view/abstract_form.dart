@@ -25,7 +25,7 @@ abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
           const Spacer(flex: 2),
           BlocConsumer<B, S>(
             listener: onFormStateUpdate,
-            builder: (context, state) => buildStatusBlock(context),
+            builder: (context, state) => buildStatusBlock(context, state),
           ),
         ],
       ),
@@ -48,12 +48,17 @@ abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
   Widget buildFields(BuildContext context);
 
   @protected
-  Widget buildStatusBlock(BuildContext context);
+  Widget buildStatusBlock(BuildContext context, S state);
 
   @protected
   Widget buildSubmitButton() => ElevatedButton(
     onPressed: () => trySubmit(),
     child: Text(submitButtonText, style: AppText.btnText),
+  );
+
+  Widget buildContinueButton() => ElevatedButton(
+    onPressed: () => appBloc.add(const AppNavigationChange()),
+    child: const Text('Продолжить', style: AppText.btnText),
   );
 
   void trySubmit() async {
