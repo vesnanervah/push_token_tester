@@ -6,7 +6,7 @@ class _PushSenderForm extends StatefulWidget {
 }
 
 class _PushSenderFormState
-    extends AbstractServerValidatedForm<BaseFormState, PushSenderBloc> {
+    extends AbstractServerValidatedForm<PushSenderState, PushSenderBloc> {
   @override
   String get submitButtonText =>
       formBloc.state.status.isSuccessful ? 'Повторить' : 'Отправить';
@@ -14,21 +14,20 @@ class _PushSenderFormState
   @override
   Widget buildFields(BuildContext context) => Column(
     children: [
-      //TODO(Zverev): do not use controllers, hold values in state
       TextFormField(
-        controller: formBloc.titleController,
+        onChanged: (val) => formBloc.add(PushSenderHeaderChanged(val)),
         maxLines: 1,
         decoration: const InputDecoration(hintText: 'Заголовок...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        controller: formBloc.textPushController,
+        onChanged: (val) => formBloc.add(PushSenderTextChanged(val)),
         maxLines: 1,
         decoration: const InputDecoration(hintText: 'Текст уведомления...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        controller: formBloc.bodyController,
+        onChanged: (val) => formBloc.add(PushSenderBodyChanged(val)),
         maxLines: 4,
         decoration: const InputDecoration(hintText: 'Тело уведомления...'),
         validator: (value) {

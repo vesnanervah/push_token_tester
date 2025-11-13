@@ -1,16 +1,17 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
 import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
 
-class PushSenderBloc extends BaseFormBloc {
+part 'push_sender_state.dart';
+part 'push_sender_event.dart';
+
+class PushSenderBloc extends BaseFormBloc<PushSenderState> {
   final PushRepository repository;
-  final titleController = TextEditingController();
-  final textPushController = TextEditingController();
-  final bodyController = TextEditingController();
+
   final AuthClient authClient;
   final String projectId;
   final String deviceToken;
@@ -20,30 +21,26 @@ class PushSenderBloc extends BaseFormBloc {
     required this.authClient,
     required this.projectId,
     required this.deviceToken,
-  }) : super(BaseFormState.initial());
-
-  @override
-  Future<void> close() {
-    titleController.dispose();
-    textPushController.dispose();
-    bodyController.dispose();
-    return super.close();
+  }) : super(PushSenderState.initial()) {
+    on<PushSenderHeaderChanged>(onPushSenderHeaderChanged);
+    on<PushSenderTextChanged>(onPushSenderTextChanged);
+    on<PushSenderBodyChanged>(onPushSenderBodyChanged);
   }
 
   @override
   Future<void> submitForm(
     BaseFormEvent event,
-    Emitter<BaseFormState> emit,
+    Emitter<PushSenderState> emit,
   ) async {
-    emit(BaseFormState.loading());
+    emit(state.copyWith(status: FormStatus.loading));
     Map<String, dynamic>? body;
     try {
-      body = bodyController.text.trim().isNotEmpty
-          ? jsonDecode(bodyController.text.trim()) as Map<String, dynamic>
+      body = state.pushBody.trim().isNotEmpty
+          ? jsonDecode(state.pushBody.trim()) as Map<String, dynamic>
           : null;
     } catch (_) {
       emit(
-        BaseFormState.rejected(
+        PushSenderState.rejected(
           'Не удалось спарсить body. Убедитесь, что оно в формате Map<String, String>',
         ),
       );
@@ -51,27 +48,51 @@ class PushSenderBloc extends BaseFormBloc {
     try {
       final response = await repository.sendPush(
         authClient,
-        title: titleController.text.trim(),
-        text: textPushController.text.trim(),
+        title: state.pushHeader.trim(),
+        text: state.pushText.trim(),
         body: body,
         projectId: projectId,
         deviceToken: deviceToken,
       );
       if (response.statusCode >= 400) {
-        emit(BaseFormState.rejected('Ошибка на сервере'));
+        emit(PushSenderState.rejected('Ошибка на сервере'));
       } else {
-        emit(BaseFormState.successful());
+        emit(state.copyWith(status: FormStatus.successful));
       }
     } catch (_) {
-      emit(BaseFormState.rejected('Что-то пошло не так'));
+      emit(PushSenderState.rejected('Что-то пошло не так'));
     }
   }
 
   @override
-  void resetForm(BaseFormEvent event, Emitter<BaseFormState> emit) {
-    titleController.text = '';
-    textPushController.text = '';
-    bodyController.text = '';
-    emit(BaseFormState.initial());
+  void resetForm(BaseFormEvent event, Emitter<PushSenderState> emit) {
+    emit(PushSenderState.initial());
+  }
+
+  @protected
+  void onPushSenderHeaderChanged(
+    PushSenderHeaderChanged event,
+    Emitter<PushSenderState> emit,
+  ) {
+    // TODO(Zverev): throttle
+    emit(state.copyWith(pushHeader: event.header));
+  }
+
+  @protected
+  void onPushSenderTextChanged(
+    PushSenderTextChanged event,
+    Emitter<PushSenderState> emit,
+  ) {
+    // TODO(Zverev): throttle
+    emit(state.copyWith(pushText: event.text));
+  }
+
+  @protected
+  void onPushSenderBodyChanged(
+    PushSenderBodyChanged event,
+    Emitter<PushSenderState> emit,
+  ) {
+    // TODO(Zverev): throttle
+    emit(state.copyWith(pushBody: event.body));
   }
 }
