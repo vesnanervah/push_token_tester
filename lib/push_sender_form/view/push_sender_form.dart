@@ -7,6 +7,32 @@ class _PushSenderForm extends StatefulWidget {
 
 class _PushSenderFormState
     extends AbstractServerValidatedForm<PushSenderState, PushSenderBloc> {
+  final headerTextController = TextEditingController();
+  final textTextController = TextEditingController();
+  final bodyTextController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    headerTextController.addListener(
+      () => formBloc.add(PushSenderHeaderChanged(headerTextController.text)),
+    );
+    textTextController.addListener(
+      () => formBloc.add(PushSenderTextChanged(textTextController.text)),
+    );
+    bodyTextController.addListener(
+      () => formBloc.add(PushSenderBodyChanged(bodyTextController.text)),
+    );
+  }
+
+  @override
+  void dispose() {
+    headerTextController.dispose();
+    textTextController.dispose();
+    bodyTextController.dispose();
+    super.dispose();
+  }
+
   @override
   String get submitButtonText =>
       formBloc.state.status.isSuccessful ? 'Повторить' : 'Отправить';
@@ -15,20 +41,20 @@ class _PushSenderFormState
   Widget buildFields(BuildContext context) => Column(
     children: [
       TextFormField(
-        onChanged: (val) => formBloc.add(PushSenderHeaderChanged(val)),
         maxLines: 1,
+        controller: headerTextController,
         decoration: const InputDecoration(hintText: 'Заголовок...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        onChanged: (val) => formBloc.add(PushSenderTextChanged(val)),
         maxLines: 1,
+        controller: textTextController,
         decoration: const InputDecoration(hintText: 'Текст уведомления...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
-        onChanged: (val) => formBloc.add(PushSenderBodyChanged(val)),
         maxLines: 4,
+        controller: bodyTextController,
         decoration: const InputDecoration(hintText: 'Тело уведомления...'),
         validator: (value) {
           if (value?.isEmpty ?? true) {
@@ -85,4 +111,14 @@ class _PushSenderFormState
       ),
     ],
   );
+
+  @override
+  void onFormStateUpdate(BuildContext context, PushSenderState state) {
+    if (state.status.isInitial) {
+      headerTextController.text = '';
+      textTextController.text = '';
+      bodyTextController.text = '';
+    }
+    super.onFormStateUpdate(context, state);
+  }
 }
