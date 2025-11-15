@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
+import 'package:push_by_token_tester/core/bloc/bloc_events_devouncer.dart';
 import 'package:push_by_token_tester/google_auth_form/repository/google_auth_client_repository.dart';
 
 part 'google_auth_state.dart';
@@ -13,7 +14,10 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
   final GoogleAuthClientRepository repository;
   String _jsonValue = '';
   GoogleAuthBloc(this.repository) : super(GoogleAuthState.initial()) {
-    on<GoogleAuthJsonChange>(onGoogleAuthJsonChange);
+    on<GoogleAuthJsonChange>(
+      onGoogleAuthJsonChange,
+      transformer: debounceTransformer(const Duration(milliseconds: 200)),
+    );
   }
 
   @override
@@ -52,7 +56,6 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
     GoogleAuthJsonChange event,
     Emitter<BaseFormState> emit,
   ) async {
-    // TODO(Zverev): throttle
     _jsonValue = event.value;
   }
 }

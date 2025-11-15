@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
 import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/core/bloc/bloc_events_devouncer.dart';
 import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
 
 part 'push_sender_state.dart';
@@ -22,9 +23,18 @@ class PushSenderBloc extends BaseFormBloc<PushSenderState> {
     required this.projectId,
     required this.deviceToken,
   }) : super(PushSenderState.initial()) {
-    on<PushSenderHeaderChanged>(onPushSenderHeaderChanged);
-    on<PushSenderTextChanged>(onPushSenderTextChanged);
-    on<PushSenderBodyChanged>(onPushSenderBodyChanged);
+    on<PushSenderHeaderChanged>(
+      onPushSenderHeaderChanged,
+      transformer: debounceTransformer(const Duration(milliseconds: 200)),
+    );
+    on<PushSenderTextChanged>(
+      onPushSenderTextChanged,
+      transformer: debounceTransformer(const Duration(milliseconds: 200)),
+    );
+    on<PushSenderBodyChanged>(
+      onPushSenderBodyChanged,
+      transformer: debounceTransformer(const Duration(milliseconds: 200)),
+    );
   }
 
   @override
@@ -74,7 +84,6 @@ class PushSenderBloc extends BaseFormBloc<PushSenderState> {
     PushSenderHeaderChanged event,
     Emitter<PushSenderState> emit,
   ) {
-    // TODO(Zverev): throttle
     emit(state.copyWith(pushHeader: event.header));
   }
 
@@ -83,7 +92,6 @@ class PushSenderBloc extends BaseFormBloc<PushSenderState> {
     PushSenderTextChanged event,
     Emitter<PushSenderState> emit,
   ) {
-    // TODO(Zverev): throttle
     emit(state.copyWith(pushText: event.text));
   }
 
@@ -92,7 +100,6 @@ class PushSenderBloc extends BaseFormBloc<PushSenderState> {
     PushSenderBodyChanged event,
     Emitter<PushSenderState> emit,
   ) {
-    // TODO(Zverev): throttle
     emit(state.copyWith(pushBody: event.body));
   }
 }
