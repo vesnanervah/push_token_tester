@@ -22,6 +22,8 @@ class NetworkGoogleAuthClientRepository extends GoogleAuthClientRepository {
   static const _firebaseMessagingScope =
       'https://www.googleapis.com/auth/firebase.messaging';
 
+  const NetworkGoogleAuthClientRepository();
+
   @override
   Future<AuthClient> retrieveAuthClient(Map<String, dynamic> json) =>
       clientViaServiceAccount(ServiceAccountCredentials.fromJson(json), [

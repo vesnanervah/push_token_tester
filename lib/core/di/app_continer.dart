@@ -10,11 +10,20 @@ sealed class AppContainer {
 
 class MockAppContainer extends AppContainer {
   @override
-  final GoogleAuthClientRepository googleAuthClientRepository =
-      const MockGoogleAuthClientRepository();
+  final googleAuthClientRepository = const MockGoogleAuthClientRepository();
 
   @override
-  final PushRepository pushRepository = const MockPushRepository();
+  final pushRepository = const MockPushRepository();
 
   const MockAppContainer();
+}
+
+class RealAppContainer extends AppContainer {
+  @override
+  final googleAuthClientRepository = const NetworkGoogleAuthClientRepository();
+
+  @override
+  final pushRepository = const NetworkPushRepository();
+
+  const RealAppContainer();
 }

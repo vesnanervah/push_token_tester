@@ -35,6 +35,8 @@ class MockPushRepository extends PushRepository {
 }
 
 class NetworkPushRepository extends PushRepository {
+  const NetworkPushRepository();
+
   Uri buildUri(String projectId) => Uri.parse(
     'https://fcm.googleapis.com/v1/projects/$projectId/messages:send',
   );
