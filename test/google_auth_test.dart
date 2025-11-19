@@ -54,14 +54,14 @@ Future<void> _testGoogleAuthPage(WidgetTester tester) async {
     submitButtonFinder,
     findsOne,
     reason:
-        'Form meant to be in Error state. Submit button have to appear in order to give the user opportunity to resubmit.',
+        'Form meant to be in Error state. Submit button has to appear in order to give the user opportunity to resubmit.',
   );
   resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
   expect(
     resetButtonFinder,
     findsOne,
     reason:
-        'Form meant to be in Error state. Reset button have to appear in order to give the user opportunity to reset values.',
+        'Form meant to be in Error state. Reset button has to appear in order to give the user opportunity to reset values.',
   );
 
   /// Trying to submit without required field. Form keep Error state

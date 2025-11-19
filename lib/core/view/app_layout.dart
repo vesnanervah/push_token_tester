@@ -32,8 +32,9 @@ class _AppLayoutState extends State<AppLayout> {
     builder: (context, state) => Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AppHeader(state.selectedNavItem),
+        AppHeader(state.selectedNavItem, key: const ValueKey('app_header')),
         Expanded(
+          key: const ValueKey('app_body'),
           child: Padding(
             padding: const EdgeInsets.all(30),
             child: PageView.builder(
@@ -45,6 +46,7 @@ class _AppLayoutState extends State<AppLayout> {
         ),
         AppFooter(
           state,
+          key: const ValueKey('app_footer'),
           onNavItemTap: (index) => context.read<AppBloc>().add(
             AppNavigationChange(item: NavItem.values[index]),
           ),
@@ -55,8 +57,10 @@ class _AppLayoutState extends State<AppLayout> {
   );
 
   Widget getPageFromNavItem(int index) => switch (NavItem.values[index]) {
-    NavItem.jsonPage => const GoogleAuthPage(key: Key('google_auth_page')),
-    NavItem.deviceTokenPage => const DeviceTokenPage(),
+    NavItem.jsonPage => const GoogleAuthPage(key: ValueKey('google_auth_page')),
+    NavItem.deviceTokenPage => const DeviceTokenPage(
+      key: ValueKey('device_token_page'),
+    ),
     NavItem.pushContentPage => const PushSenderPage(),
   };
 
