@@ -39,6 +39,7 @@ void main() {
     }
 
     /// First step
+    final authPageFinder = find.byKey(const ValueKey('google_auth_page'));
     expect(
       find.text(NavItem.values.first.title),
       findsOne,
@@ -46,11 +47,11 @@ void main() {
           'Should display title of the first NavItem during the first step.',
     );
     expect(
-      find.byKey(const ValueKey('google_auth_page')),
+      authPageFinder,
       findsOneWidget,
       reason: 'Should display GoogleAuthPage during the first step.',
     );
-    await _testGoogleAuthPage(tester);
+    await _testGoogleAuthPage(tester, authPageFinder);
 
     /// Second step
     await tester.tap(find.byKey(const ValueKey('continue_form_btn')));

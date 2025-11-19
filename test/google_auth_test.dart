@@ -1,26 +1,38 @@
 part of 'app_test.dart';
 
-Future<void> _testGoogleAuthPage(WidgetTester tester) async {
-  final authJsonTextfieldFinder = find.byType(TextFormField);
+Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
+  final authJsonTextfieldFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byType(TextFormField),
+  );
   expect(
     authJsonTextfieldFinder,
     findsOneWidget,
     reason: 'Google auth json textfield should always exist',
   );
-  var submitButtonFinder = find.byKey(const ValueKey('submit_form_btn'));
+  var submitButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('submit_form_btn')),
+  );
   expect(
     submitButtonFinder,
     findsOneWidget,
     reason: 'Submit button should exist in Initial state',
   );
 
-  var continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
+  var continueButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('continue_form_btn')),
+  );
   expect(
     continueButtonFinder,
     findsNothing,
     reason: 'Continue button should not exist in Initial state',
   );
-  var resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
+  var resetButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('reset_form_btn')),
+  );
   expect(
     resetButtonFinder,
     findsNothing,
@@ -30,14 +42,20 @@ Future<void> _testGoogleAuthPage(WidgetTester tester) async {
   /// Trying to submit without input. State (and layout as well) should not be changed
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
+  continueButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('continue_form_btn')),
+  );
   expect(
     continueButtonFinder,
     findsNothing,
     reason:
         'Form meant to be still in Initial state. Continue button doesnt have to appear in this state.',
   );
-  resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
+  resetButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('reset_form_btn')),
+  );
   expect(
     resetButtonFinder,
     findsNothing,
@@ -49,14 +67,20 @@ Future<void> _testGoogleAuthPage(WidgetTester tester) async {
   await tester.enterText(authJsonTextfieldFinder, 'abcde');
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  submitButtonFinder = find.byKey(const ValueKey('submit_form_btn'));
+  submitButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('submit_form_btn')),
+  );
   expect(
     submitButtonFinder,
     findsOne,
     reason:
         'Form meant to be in Error state. Submit button has to appear in order to give the user opportunity to resubmit.',
   );
-  resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
+  resetButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('reset_form_btn')),
+  );
   expect(
     resetButtonFinder,
     findsOne,
@@ -68,7 +92,10 @@ Future<void> _testGoogleAuthPage(WidgetTester tester) async {
   await tester.enterText(authJsonTextfieldFinder, '{"test": "test"}');
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
+  continueButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('continue_form_btn')),
+  );
   expect(
     continueButtonFinder,
     findsNothing,
@@ -83,7 +110,10 @@ Future<void> _testGoogleAuthPage(WidgetTester tester) async {
   await tester.pumpAndSettle(const Duration(milliseconds: 300));
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
+  continueButtonFinder = find.descendant(
+    of: pageFinder,
+    matching: find.byKey(const ValueKey('continue_form_btn')),
+  );
   expect(
     continueButtonFinder,
     findsOne,
