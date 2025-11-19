@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:push_by_token_tester/core/app.dart';
-import 'package:push_by_token_tester/core/di/app_continer.dart';
+import 'package:push_by_token_tester/core/di/app_container.dart';
 
 void main() {
   runApp(const App(appContainer: RealAppContainer()));
