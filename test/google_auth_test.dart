@@ -1,48 +1,80 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+part of 'app_test.dart';
 
-Future<void> testGoogleAuthPage(WidgetTester tester) async {
-  /// Should have
-  /// [authJsonTextfieldFinder] - google auth json textfield(always exists)
-  /// [submitButtonFinder] - submit button (exists only in initial or error state)
+Future<void> _testGoogleAuthPage(WidgetTester tester) async {
   final authJsonTextfieldFinder = find.byType(TextFormField);
-  expect(authJsonTextfieldFinder, findsOneWidget);
+  expect(
+    authJsonTextfieldFinder,
+    findsOneWidget,
+    reason: 'Google auth json textfield should always exist',
+  );
   var submitButtonFinder = find.byKey(const ValueKey('submit_form_btn'));
-  expect(submitButtonFinder, findsOneWidget);
+  expect(
+    submitButtonFinder,
+    findsOneWidget,
+    reason: 'Submit button should exist in Initial state',
+  );
 
-  /// Should not have
-  /// [continueButtonFinder] - button that allows to move to the next step after successful submit (only in error or successful states)
-  /// [resetButtonFinder] - reset form state button (only in error or successful states)
   var continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
-  expect(continueButtonFinder, findsNothing);
+  expect(
+    continueButtonFinder,
+    findsNothing,
+    reason: 'Continue button should not exist in Initial state',
+  );
   var resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
-  expect(resetButtonFinder, findsNothing);
+  expect(
+    resetButtonFinder,
+    findsNothing,
+    reason: 'Reset button should not exist in Initial state',
+  );
 
   /// Trying to submit without input. State (and layout as well) should not be changed
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
-  expect(continueButtonFinder, findsNothing);
+  expect(
+    continueButtonFinder,
+    findsNothing,
+    reason:
+        'Form meant to be still in Initial state. Continue button doesnt have to appear in this state.',
+  );
   resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
-  expect(resetButtonFinder, findsNothing);
+  expect(
+    resetButtonFinder,
+    findsNothing,
+    reason:
+        'Form meant to be still in Initial state. Reset button doesnt have to appear in this state.',
+  );
 
   /// Trying to submit with invalid input. Form should take Error state
   await tester.enterText(authJsonTextfieldFinder, 'abcde');
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   submitButtonFinder = find.byKey(const ValueKey('submit_form_btn'));
-  expect(submitButtonFinder, findsOne);
+  expect(
+    submitButtonFinder,
+    findsOne,
+    reason:
+        'Form meant to be in Error state. Submit button have to appear in order to give the user opportunity to resubmit.',
+  );
   resetButtonFinder = find.byKey(const ValueKey('reset_form_btn'));
-  expect(resetButtonFinder, findsOne);
-  await tester.enterText(authJsonTextfieldFinder, '');
+  expect(
+    resetButtonFinder,
+    findsOne,
+    reason:
+        'Form meant to be in Error state. Reset button have to appear in order to give the user opportunity to reset values.',
+  );
 
   /// Trying to submit without required field. Form keep Error state
   await tester.enterText(authJsonTextfieldFinder, '{"test": "test"}');
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
-  expect(continueButtonFinder, findsNothing);
-  await tester.enterText(authJsonTextfieldFinder, '');
+  expect(
+    continueButtonFinder,
+    findsNothing,
+    reason:
+        'The form is still meant to be in Error state. Continue button should to appear.',
+  );
 
   /// Trying to submit with valid input. State should take Successful state
   await tester.enterText(authJsonTextfieldFinder, '{"project_id": "test"}');
@@ -52,5 +84,10 @@ Future<void> testGoogleAuthPage(WidgetTester tester) async {
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
-  expect(continueButtonFinder, findsOne);
+  expect(
+    continueButtonFinder,
+    findsOne,
+    reason:
+        'The form should take Successful state and give an opportunity for the user to move to the next step.',
+  );
 }
