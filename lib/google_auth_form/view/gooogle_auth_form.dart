@@ -30,6 +30,7 @@ class _GoogleAuthFormState
 
   @override
   Widget buildFields(BuildContext context) => TextFormField(
+    key: const ValueKey('google_auth_json_textfield'),
     minLines: 12,
     controller: jsonTextController,
     maxLines: 14,

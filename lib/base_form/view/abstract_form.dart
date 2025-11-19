@@ -52,11 +52,13 @@ abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
 
   @protected
   Widget buildSubmitButton() => ElevatedButton(
+    key: const ValueKey('submit_form_btn'),
     onPressed: () => trySubmit(),
     child: Text(submitButtonText, style: AppText.btnText),
   );
 
   Widget buildContinueButton() => ElevatedButton(
+    key: const ValueKey('continue_form_btn'),
     onPressed: () => appBloc.add(const AppNavigationChange()),
     child: const Text('Продолжить', style: AppText.btnText),
   );

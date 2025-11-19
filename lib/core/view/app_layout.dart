@@ -55,7 +55,7 @@ class _AppLayoutState extends State<AppLayout> {
   );
 
   Widget getPageFromNavItem(int index) => switch (NavItem.values[index]) {
-    NavItem.jsonPage => const GoogleAuthPage(),
+    NavItem.jsonPage => const GoogleAuthPage(key: Key('google_auth_page')),
     NavItem.deviceTokenPage => const DeviceTokenPage(),
     NavItem.pushContentPage => const PushSenderPage(),
   };
