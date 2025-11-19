@@ -45,9 +45,12 @@ Future<void> testGoogleAuthPage(WidgetTester tester) async {
   await tester.enterText(authJsonTextfieldFinder, '');
 
   /// Trying to submit with valid input. State should take Successful state
-  await tester.enterText(find.byType(TextFormField), '{"project_id": "test"}');
-  await tester.tap(authJsonTextfieldFinder);
-  await tester.pumpAndSettle(const Duration(seconds: 2));
+  await tester.enterText(authJsonTextfieldFinder, '{"project_id": "test"}');
+  // Bumps into 200 ms debouncer.
+  // In real life there is no way user can click on submit that fast after pasting the credentials
+  await tester.pumpAndSettle(const Duration(milliseconds: 300));
+  await tester.tap(submitButtonFinder);
+  await tester.pumpAndSettle();
   continueButtonFinder = find.byKey(const ValueKey('continue_form_btn'));
   expect(continueButtonFinder, findsOne);
 }
