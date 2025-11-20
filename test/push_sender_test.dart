@@ -74,7 +74,10 @@ Future<void> _testPushSenderPage(WidgetTester tester, Finder pageFinder) async {
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   expect(
-    find.descendant(of: pageFinder, matching: find.text('успешно')),
+    find.descendant(
+      of: pageFinder,
+      matching: find.text('Пуш успешно отправлен', findRichText: true),
+    ),
     findsAny,
     reason:
         'The push was successful. There should be some information about that.',
