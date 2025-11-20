@@ -24,6 +24,7 @@ abstract class AbstractForm<S extends BaseFormState, B extends BaseFormBloc<S>>
           wrapFieldsWithConstraints(context),
           const Spacer(flex: 2),
           BlocConsumer<B, S>(
+            listenWhen: (previous, current) => previous != current,
             listener: onFormStateUpdate,
             builder: (context, state) => buildStatusBlock(context, state),
           ),
