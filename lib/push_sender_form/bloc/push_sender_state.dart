@@ -31,4 +31,11 @@ class PushSenderState extends BaseFormState {
     status: status ?? this.status,
     error: error ?? this.error,
   );
+
+  @override
+  List<Object?> get props => [pushHeader, pushText, pushBody, ...super.props];
+}
+
+class ResetPushSenderState extends PushSenderState {
+  const ResetPushSenderState();
 }

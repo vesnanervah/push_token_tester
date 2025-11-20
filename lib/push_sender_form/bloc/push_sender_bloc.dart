@@ -76,7 +76,7 @@ class PushSenderBloc extends BaseFormBloc<PushSenderState> {
 
   @override
   void resetForm(BaseFormEvent event, Emitter<PushSenderState> emit) {
-    emit(PushSenderState.initial());
+    emit(const ResetPushSenderState());
   }
 
   @protected
