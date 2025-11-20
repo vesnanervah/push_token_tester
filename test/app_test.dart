@@ -76,12 +76,7 @@ void main() {
     await _testDeviceTokenPage(tester, deviceTokenPageFinder);
 
     /// Transition to third screen
-    await tester.tap(
-      find.descendant(
-        of: deviceTokenPageFinder,
-        matching: find.byKey(const ValueKey('continue_form_btn')),
-      ),
-    );
+    await tester.tap(_getContinueButtonFromPage(deviceTokenPageFinder));
     await tester.pumpAndSettle();
 
     /// Third step
