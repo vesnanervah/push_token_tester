@@ -6,6 +6,7 @@ import 'package:push_by_token_tester/core/nav/nav_item.dart';
 
 part 'google_auth_test.dart';
 part 'device_token_test.dart';
+part 'push_sender_test.dart';
 
 void main() {
   testWidgets('end-to-end', (tester) async {
@@ -72,6 +73,30 @@ void main() {
       findsOneWidget,
       reason: 'Should display DeviceTokenPage during the second step.',
     );
-    _testDeviceTokenPage(tester, deviceTokenPageFinder);
+    await _testDeviceTokenPage(tester, deviceTokenPageFinder);
+
+    /// Transition to third screen
+    await tester.tap(
+      find.descendant(
+        of: deviceTokenPageFinder,
+        matching: find.byKey(const ValueKey('continue_form_btn')),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    /// Third step
+    expect(
+      find.text(NavItem.values[2].title),
+      findsOne,
+      reason:
+          'Should display title of the third NavItem during the third step.',
+    );
+    final pushSenderPageFinder = find.byKey(const ValueKey('push_sender_page'));
+    expect(
+      pushSenderPageFinder,
+      findsOneWidget,
+      reason: 'Should display PushSenderPage during the third step.',
+    );
+    await _testPushSenderPage(tester, pushSenderPageFinder);
   });
 }

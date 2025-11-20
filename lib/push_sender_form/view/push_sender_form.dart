@@ -41,18 +41,21 @@ class _PushSenderFormState
   Widget buildFields(BuildContext context) => Column(
     children: [
       TextFormField(
+        key: const ValueKey('push_header_textfield'),
         maxLines: 1,
         controller: headerTextController,
         decoration: const InputDecoration(hintText: 'Заголовок...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
+        key: const ValueKey('push_text_textfield'),
         maxLines: 1,
         controller: textTextController,
         decoration: const InputDecoration(hintText: 'Текст уведомления...'),
       ),
       const SizedBox(height: 20),
       TextFormField(
+        key: const ValueKey('push_body_textfield'),
         maxLines: 4,
         controller: bodyTextController,
         decoration: const InputDecoration(hintText: 'Тело уведомления...'),

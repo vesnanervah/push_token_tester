@@ -61,7 +61,9 @@ class _AppLayoutState extends State<AppLayout> {
     NavItem.deviceTokenPage => const DeviceTokenPage(
       key: ValueKey('device_token_page'),
     ),
-    NavItem.pushContentPage => const PushSenderPage(),
+    NavItem.pushContentPage => const PushSenderPage(
+      key: ValueKey('push_sender_page'),
+    ),
   };
 
   void onStateChange(BuildContext context, AppState state) {
