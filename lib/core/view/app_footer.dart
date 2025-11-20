@@ -25,6 +25,7 @@ class AppFooter extends StatelessWidget {
 
   Widget buildPageIndicator(BuildContext context, int index) {
     return GestureDetector(
+      key: ValueKey('app_nav_btn_$index'),
       onTap: () => onNavItemTap(index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),

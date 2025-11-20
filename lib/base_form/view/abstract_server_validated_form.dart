@@ -79,6 +79,7 @@ abstract class AbstractServerValidatedForm<
   Widget buildSuccessfulStatusBlockText();
 
   Widget buildResetButton() => ElevatedButton(
+    key: const Key('reset_form_btn'),
     onPressed: () => formBloc.add(const ResetForm()),
     child: const Text('Сбросить', style: AppText.btnText),
   );
