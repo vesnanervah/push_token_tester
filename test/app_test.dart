@@ -53,19 +53,25 @@ void main() {
     );
     await _testGoogleAuthPage(tester, authPageFinder);
 
-    /// Second step
+    /// Transition to second step
     await tester.tap(find.byKey(const ValueKey('continue_form_btn')));
     await tester.pumpAndSettle();
+
+    /// Second step
     expect(
       find.text(NavItem.values[1].title),
       findsOne,
       reason:
           'Should display title of the second NavItem during the second step.',
     );
+    final deviceTokenPageFinder = find.byKey(
+      const ValueKey('device_token_page'),
+    );
     expect(
-      find.byKey(const ValueKey('device_token_page')),
+      deviceTokenPageFinder,
       findsOneWidget,
       reason: 'Should display DeviceTokenPage during the second step.',
     );
+    _testDeviceTokenPage(tester, deviceTokenPageFinder);
   });
 }
