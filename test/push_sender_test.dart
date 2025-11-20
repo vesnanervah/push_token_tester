@@ -28,20 +28,14 @@ Future<void> _testPushSenderPage(WidgetTester tester, Finder pageFinder) async {
     findsOneWidget,
     reason: 'Push body textfield should always exist',
   );
-  var submitButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('submit_form_btn')),
-  );
+  var submitButtonFinder = _getSubmitButtonFromPage(pageFinder);
   expect(
     submitButtonFinder,
     findsOneWidget,
     reason: 'Submit button should exist in Initial state',
   );
 
-  var resetButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('reset_form_btn')),
-  );
+  var resetButtonFinder = _getResetButtonFromPage(pageFinder);
   expect(
     resetButtonFinder,
     findsNothing,
@@ -53,10 +47,7 @@ Future<void> _testPushSenderPage(WidgetTester tester, Finder pageFinder) async {
   await tester.pumpAndSettle(const Duration(milliseconds: 300));
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  resetButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('reset_form_btn')),
-  );
+  resetButtonFinder = _getResetButtonFromPage(pageFinder);
   expect(
     resetButtonFinder,
     findsNothing,
@@ -70,7 +61,7 @@ Future<void> _testPushSenderPage(WidgetTester tester, Finder pageFinder) async {
   await tester.enterText(bodyTextfieldFinder, '{"kkey":"vvalue"}');
   // Bumps into 200 ms debouncer.
   // In real life there is no way user can click on submit that fast after pasting the credentials
-  await tester.pumpAndSettle(const Duration(milliseconds: 500));
+  await tester.pumpAndSettle(const Duration(milliseconds: 300));
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
   expect(

@@ -13,20 +13,14 @@ Future<void> _testDeviceTokenPage(
     findsOneWidget,
     reason: 'Device token textfield should always exist',
   );
-  var submitButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('submit_form_btn')),
-  );
+  var submitButtonFinder = _getSubmitButtonFromPage(pageFinder);
   expect(
     submitButtonFinder,
     findsOneWidget,
     reason: 'Submit button should exist in Initial state',
   );
 
-  var continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  var continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsNothing,
@@ -36,10 +30,7 @@ Future<void> _testDeviceTokenPage(
   /// Trying to submit without input. State (and layout as well) should not be changed
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsNothing,
@@ -54,10 +45,7 @@ Future<void> _testDeviceTokenPage(
   await tester.pumpAndSettle(const Duration(milliseconds: 300));
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsOne,

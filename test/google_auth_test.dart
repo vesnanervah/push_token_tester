@@ -10,29 +10,20 @@ Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
     findsOneWidget,
     reason: 'Google auth json textfield should always exist',
   );
-  var submitButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('submit_form_btn')),
-  );
+  var submitButtonFinder = _getSubmitButtonFromPage(pageFinder);
   expect(
     submitButtonFinder,
     findsOneWidget,
     reason: 'Submit button should exist in Initial state',
   );
 
-  var continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  var continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsNothing,
     reason: 'Continue button should not exist in Initial state',
   );
-  var resetButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('reset_form_btn')),
-  );
+  var resetButtonFinder = _getResetButtonFromPage(pageFinder);
   expect(
     resetButtonFinder,
     findsNothing,
@@ -42,10 +33,7 @@ Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
   /// Trying to submit without input. State (and layout as well) should not be changed
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsNothing,
@@ -77,10 +65,7 @@ Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
     reason:
         'Form meant to be in Error state. Submit button has to appear in order to give the user opportunity to resubmit.',
   );
-  resetButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('reset_form_btn')),
-  );
+  resetButtonFinder = _getResetButtonFromPage(pageFinder);
   expect(
     resetButtonFinder,
     findsOne,
@@ -92,10 +77,7 @@ Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
   await tester.enterText(authJsonTextfieldFinder, '{"test": "test"}');
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsNothing,
@@ -110,10 +92,7 @@ Future<void> _testGoogleAuthPage(WidgetTester tester, Finder pageFinder) async {
   await tester.pumpAndSettle(const Duration(milliseconds: 300));
   await tester.tap(submitButtonFinder);
   await tester.pumpAndSettle();
-  continueButtonFinder = find.descendant(
-    of: pageFinder,
-    matching: find.byKey(const ValueKey('continue_form_btn')),
-  );
+  continueButtonFinder = _getContinueButtonFromPage(pageFinder);
   expect(
     continueButtonFinder,
     findsOne,

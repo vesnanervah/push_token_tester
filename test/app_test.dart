@@ -100,3 +100,19 @@ void main() {
     await _testPushSenderPage(tester, pushSenderPageFinder);
   });
 }
+
+/// Finder: common buttons
+Finder _getSubmitButtonFromPage(Finder page) => find.descendant(
+  of: page,
+  matching: find.byKey(const ValueKey('submit_form_btn')),
+);
+
+Finder _getResetButtonFromPage(Finder page) => find.descendant(
+  of: page,
+  matching: find.byKey(const ValueKey('reset_form_btn')),
+);
+
+Finder _getContinueButtonFromPage(Finder page) => find.descendant(
+  of: page,
+  matching: find.byKey(const ValueKey('continue_form_btn')),
+);
