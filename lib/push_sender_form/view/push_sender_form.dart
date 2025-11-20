@@ -114,11 +114,10 @@ class _PushSenderFormState
 
   @override
   void onFormStateUpdate(BuildContext context, PushSenderState state) {
-    if (state.status.isInitial) {
+    if (state is ResetPushSenderState) {
       headerTextController.text = '';
       textTextController.text = '';
       bodyTextController.text = '';
     }
-    super.onFormStateUpdate(context, state);
   }
 }
