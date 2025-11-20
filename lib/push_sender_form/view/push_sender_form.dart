@@ -12,20 +12,6 @@ class _PushSenderFormState
   final bodyTextController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    headerTextController.addListener(
-      () => formBloc.add(PushSenderHeaderChanged(headerTextController.text)),
-    );
-    textTextController.addListener(
-      () => formBloc.add(PushSenderTextChanged(textTextController.text)),
-    );
-    bodyTextController.addListener(
-      () => formBloc.add(PushSenderBodyChanged(bodyTextController.text)),
-    );
-  }
-
-  @override
   void dispose() {
     headerTextController.dispose();
     textTextController.dispose();
@@ -43,6 +29,7 @@ class _PushSenderFormState
       TextFormField(
         key: const ValueKey('push_header_textfield'),
         maxLines: 1,
+        onChanged: (value) => formBloc.add(PushSenderHeaderChanged(value)),
         controller: headerTextController,
         decoration: const InputDecoration(hintText: 'Заголовок...'),
       ),
@@ -50,6 +37,7 @@ class _PushSenderFormState
       TextFormField(
         key: const ValueKey('push_text_textfield'),
         maxLines: 1,
+        onChanged: (value) => formBloc.add(PushSenderTextChanged(value)),
         controller: textTextController,
         decoration: const InputDecoration(hintText: 'Текст уведомления...'),
       ),
@@ -57,6 +45,7 @@ class _PushSenderFormState
       TextFormField(
         key: const ValueKey('push_body_textfield'),
         maxLines: 4,
+        onChanged: (value) => formBloc.add(PushSenderBodyChanged(value)),
         controller: bodyTextController,
         decoration: const InputDecoration(hintText: 'Тело уведомления...'),
         validator: (value) {
