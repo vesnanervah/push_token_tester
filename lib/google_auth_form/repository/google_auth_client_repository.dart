@@ -1,5 +1,5 @@
 import 'package:googleapis_auth/auth_io.dart';
-import 'package:push_by_token_tester/google_auth_form/repository/mock_google_auth_client.dart';
+import 'package:push_by_token_tester/mock/google_auth/mock_google_auth_client.dart';
 
 sealed class GoogleAuthClientRepository {
   const GoogleAuthClientRepository();

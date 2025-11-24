@@ -6,6 +6,7 @@ import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
 import 'package:push_by_token_tester/base_form/view/abstract_server_validated_form.dart';
 import 'package:push_by_token_tester/core/bloc/bloc.dart';
 import 'package:push_by_token_tester/core/di/app_container.dart';
+import 'package:push_by_token_tester/core/di/injection.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
 import 'package:push_by_token_tester/push_sender_form/bloc/push_sender_bloc.dart';
 
@@ -25,7 +26,7 @@ class _PushSenderPageState extends State<PushSenderPage> {
       create: (context) {
         final appBlocState = context.read<AppBloc>().state;
         return PushSenderBloc(
-          context.read<AppContainer>().pushRepository,
+          getIt<AppContainer>().pushRepository,
           authClient: appBlocState.authClient!,
           projectId: appBlocState.projectId!,
           deviceToken: appBlocState.deviceToken!,
