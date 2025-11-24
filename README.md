@@ -4,12 +4,12 @@ An application that allows you to send a firebase push message on a device by it
 
 ## Getting Started
 
-There are two build confings available:
+There are **two build confings** available:
 
-- push_token_tester that runs main.dart and uses real repositories.
-- mock that runs main_mock.dart and uses fake ones.
+- **push_token_tester** that runs main.dart and uses real repositories.
+- **mock** that runs main_mock.dart and uses fake ones.
 
-Screenshots are made with mock build and using fake data. Do not share your FCM credentials 
+Screenshots are made with **mock** build and using fake data. **Do not share your FCM credentials**
 and device token. Better make a new service credentials, give them proper rights,
 and delete them from the account after the job done.
 
