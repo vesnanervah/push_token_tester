@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
-import 'package:push_by_token_tester/base_form/view/abstract_server_validated_form.dart';
+import 'package:push_by_token_tester/base_form/base_form.dart';
 import 'package:push_by_token_tester/core/bloc/bloc.dart';
 import 'package:push_by_token_tester/core/di/injection.dart';
 import 'package:push_by_token_tester/core/view/app_theme.dart';
-import 'package:push_by_token_tester/google_auth_form/bloc/google_auth_bloc.dart';
-import 'package:push_by_token_tester/google_auth_form/repository/repository.dart';
+import 'package:push_by_token_tester/google_auth_form/google_auth_form.dart';
 
 part 'gooogle_auth_form.dart';
 

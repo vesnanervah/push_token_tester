@@ -3,36 +3,36 @@ part of 'google_auth_bloc.dart';
 class GoogleAuthState extends BaseFormState {
   final AuthClient? authClient;
   final String? projectId;
+  final String jsonValue;
 
   const GoogleAuthState({
     this.authClient,
     this.projectId,
     super.error,
     super.status,
+    this.jsonValue = '',
   });
 
   factory GoogleAuthState.initial() =>
       const GoogleAuthState(authClient: null, projectId: null);
-  factory GoogleAuthState.loading() => const GoogleAuthState(
-    authClient: null,
-    projectId: null,
-    status: FormStatus.loading,
-  );
-  factory GoogleAuthState.successful({
-    required AuthClient authClient,
-    required String projectId,
+
+  GoogleAuthState copyWith({
+    AuthClient? authClient,
+    String? projectId,
+    String? jsonValue,
+    String? error,
+    FormStatus? status,
   }) => GoogleAuthState(
-    authClient: authClient,
-    projectId: projectId,
-    status: FormStatus.successful,
-  );
-  factory GoogleAuthState.rejected(String error) => GoogleAuthState(
-    authClient: null,
-    projectId: null,
-    status: FormStatus.rejected,
-    error: error,
+    authClient: authClient ?? this.authClient,
+    projectId: projectId ?? this.projectId,
+    jsonValue: jsonValue ?? this.jsonValue,
+    error: error ?? this.error,
+    status: status ?? this.status,
   );
 
+  GoogleAuthState copyAsError(String error) =>
+      copyWith(status: FormStatus.rejected, error: error);
+
   @override
-  List<Object?> get props => [authClient, projectId, ...super.props];
+  List<Object?> get props => [authClient, projectId, jsonValue, ...super.props];
 }

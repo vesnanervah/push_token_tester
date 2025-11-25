@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/base_form/base_form.dart';
 import 'package:push_by_token_tester/core/bloc/bloc.dart';
 
 part 'device_token_state.dart';

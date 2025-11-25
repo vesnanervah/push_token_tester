@@ -15,14 +15,6 @@ class _GoogleAuthFormState
   get submitButtonText => 'Отправить';
 
   @override
-  void initState() {
-    super.initState();
-    jsonTextController.addListener(
-      () => formBloc.add(GoogleAuthJsonChange(jsonTextController.text)),
-    );
-  }
-
-  @override
   void dispose() {
     jsonTextController.dispose();
     super.dispose();
@@ -32,6 +24,7 @@ class _GoogleAuthFormState
   Widget buildFields(BuildContext context) => TextFormField(
     key: const ValueKey('google_auth_json_textfield'),
     minLines: 12,
+    onChanged: (value) => formBloc.add(GoogleAuthJsonChange(value)),
     controller: jsonTextController,
     maxLines: 14,
     decoration: const InputDecoration(hintText: _credentialsJsonPlaceholer),
@@ -65,10 +58,6 @@ class _GoogleAuthFormState
 
   @override
   void onFormStateUpdate(BuildContext context, GoogleAuthState state) {
-    if (state.status.isInitial) {
-      // Reset value after form reset
-      jsonTextController.text = '';
-    }
     appBloc.add(
       AppAuthClientChanged(
         authClient: state.authClient,

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:push_by_token_tester/base_form/bloc/base_form_bloc.dart';
+import 'package:push_by_token_tester/base_form/base_form.dart';
 import 'package:push_by_token_tester/core/bloc/bloc_events_devouncer.dart';
-import 'package:push_by_token_tester/push_sender_form/repository/push_repository.dart';
+import 'package:push_by_token_tester/push_sender_form/push_sender_form.dart';
 
 part 'push_sender_state.dart';
 part 'push_sender_event.dart';

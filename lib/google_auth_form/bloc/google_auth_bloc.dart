@@ -3,16 +3,15 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:googleapis_auth/googleapis_auth.dart';
-import 'package:push_by_token_tester/base_form/bloc/bloc.dart';
-import 'package:push_by_token_tester/core/bloc/bloc_events_devouncer.dart';
-import 'package:push_by_token_tester/google_auth_form/repository/google_auth_client_repository.dart';
+import 'package:push_by_token_tester/base_form/base_form.dart';
+import 'package:push_by_token_tester/core/bloc/bloc.dart';
+import 'package:push_by_token_tester/google_auth_form/google_auth_form.dart';
 
 part 'google_auth_state.dart';
 part 'google_auth_event.dart';
 
 class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
   final GoogleAuthClientRepository repository;
-  String _jsonValue = '';
   GoogleAuthBloc(this.repository) : super(GoogleAuthState.initial()) {
     on<GoogleAuthJsonChange>(
       onGoogleAuthJsonChange,
@@ -25,14 +24,14 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
     BaseFormEvent event,
     Emitter<GoogleAuthState> emit,
   ) async {
-    emit(GoogleAuthState.loading());
+    emit(state.copyWith(status: FormStatus.loading));
     try {
-      final jsonData = jsonDecode(_jsonValue.trim());
+      final jsonData = jsonDecode(state.jsonValue);
       final projectId = jsonData['project_id'];
       if (projectId is! String) {
         return emit(
-          GoogleAuthState.rejected(
-            (projectId == null)
+          state.copyAsError(
+            projectId == null
                 ? 'Не найден project_id'
                 : 'project_Id должен быть в формате String',
           ),
@@ -40,13 +39,17 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
       }
       final client = await repository.retrieveAuthClient(jsonData);
       emit(
-        GoogleAuthState.successful(authClient: client, projectId: projectId),
+        state.copyWith(
+          status: FormStatus.successful,
+          authClient: client,
+          projectId: projectId,
+        ),
       );
     } catch (e) {
       if (e is FormatException) {
-        emit(GoogleAuthState.rejected('объект не в JSON формате'));
+        emit(state.copyAsError('объект не в JSON формате'));
       } else {
-        emit(GoogleAuthState.rejected('что-то пошло не так'));
+        emit(state.copyAsError('что-то пошло не так'));
       }
     }
   }
@@ -62,6 +65,6 @@ class GoogleAuthBloc extends BaseFormBloc<GoogleAuthState> {
     GoogleAuthJsonChange event,
     Emitter<BaseFormState> emit,
   ) async {
-    _jsonValue = event.value;
+    emit(state.copyWith(jsonValue: event.value));
   }
 }
