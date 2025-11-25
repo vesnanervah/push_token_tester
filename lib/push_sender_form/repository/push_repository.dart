@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart';
+import 'package:injectable/injectable.dart';
 
 sealed class PushRepository {
   const PushRepository();
@@ -17,6 +18,8 @@ sealed class PushRepository {
   });
 }
 
+@Injectable(as: PushRepository)
+@test
 class MockPushRepository extends PushRepository {
   const MockPushRepository();
 
@@ -34,6 +37,8 @@ class MockPushRepository extends PushRepository {
   );
 }
 
+@Injectable(as: PushRepository)
+@dev
 class NetworkPushRepository extends PushRepository {
   const NetworkPushRepository();
 

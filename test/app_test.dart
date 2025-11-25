@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:injectable/injectable.dart';
 import 'package:push_by_token_tester/core/app.dart';
-import 'package:push_by_token_tester/core/di/app_container.dart';
+import 'package:push_by_token_tester/core/di/injection.dart';
 import 'package:push_by_token_tester/core/nav/nav_item.dart';
 
 part 'google_auth_test.dart';
@@ -13,7 +14,9 @@ void main() {
     tester.view.physicalSize = const Size(1920, 1080);
     tester.view.devicePixelRatio = 1;
 
-    await tester.pumpWidget(const App(appContainer: MockAppContainer()));
+    configureDependencies(Environment.test);
+
+    await tester.pumpWidget(const App());
 
     /// Basic layout
     expect(
