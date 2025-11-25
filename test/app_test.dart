@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:push_by_token_tester/core/app.dart';
-import 'package:push_by_token_tester/core/di/app_container.dart';
 import 'package:push_by_token_tester/core/di/injection.dart';
 import 'package:push_by_token_tester/core/nav/nav_item.dart';
 

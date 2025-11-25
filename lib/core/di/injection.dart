@@ -4,9 +4,6 @@ import 'injection.config.dart';
 
 GetIt get getIt => GetIt.instance;
 
-const devEnv = Environment('dev');
-const testEnv = Environment('test');
-
 @InjectableInit()
 void configureDependencies(String environment) =>
     getIt.init(environment: environment);
