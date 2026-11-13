@@ -5,5 +5,5 @@ import 'package:push_by_token_tester/core/di/injection.dart';
 
 void main() {
   configureDependencies(Environment.test);
-  runApp(const App());
+  runApp(const App(dryRun: true));
 }
